@@ -2,7 +2,6 @@
 """function returns matrix's shape"""
 
 
-
 def matrix_shape(matrix):
     """matrix"""
     res_matx = [len(matrix)]
