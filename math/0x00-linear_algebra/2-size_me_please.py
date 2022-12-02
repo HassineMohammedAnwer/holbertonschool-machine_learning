@@ -9,4 +9,4 @@ def matrix_shape(matrix):
     while isinstance(matrix[0], list):
         res_matx.append(len(matrix[0]))
         matrix = matrix[0]
-    return (res_matx)
+    return(res_matx)
