@@ -7,7 +7,6 @@ r = np.log(0.5)
 t = 5730
 y = np.exp((r / t) * x)
 
-y = np.exp((r / t) * x)
 plt.plot(x, y)
 plt.yscale("log")
 plt.title("Exponential Decay of C-14")
