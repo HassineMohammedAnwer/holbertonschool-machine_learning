@@ -4,6 +4,7 @@
 
 import numpy as np
 
+
 class Neuron:
     """defines a single neuron performing binary classification"""
 
