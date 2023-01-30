@@ -2,5 +2,5 @@
 
 summation_i_squared = __import__('9-sum_total').summation_i_squared
 
-n = "ali"
+n = 5
 print(summation_i_squared(n))
