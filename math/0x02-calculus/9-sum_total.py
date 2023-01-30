@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""pyth"""
+"""pythsdvsqdvqdsv"""
 
 
 def summation_i_squared(n):
-    """sum"""
+    """
+    sumaezfaefaefaef
+    """
     if type(n) is not int:
         return None
     if n < 1:
