@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """pyth"""
 
+
 def summation_i_squared(n):
     """sum"""
     if type(n) is not int:
