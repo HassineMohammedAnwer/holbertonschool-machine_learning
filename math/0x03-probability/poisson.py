@@ -5,13 +5,6 @@
 class Poisson:
     """function poiss
     """
-    #!/usr/bin/env python3
-"""Piosson module"""
-
-
-class Poisson:
-    """function poiss
-    """
     e = 2.7182818285
 
     def __init__(self, data=None, lambtha=1.):
