@@ -9,6 +9,7 @@ class Neuron:
     """defines a single neuron performing binary classification"""
 
     def __init__(self, nx):
+        """lhkhl"""
         if not type(nx) is int:
             raise TypeError('nx must be an integer')
         elif (nx < 1):
@@ -34,3 +35,4 @@ class Neuron:
         z = np.matmul(self.__W, X) + self.__b
         self.__A = 1 / (1 + np.exp(-z))
         return self.__A
+
