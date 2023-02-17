@@ -25,4 +25,4 @@ def add_matrices(mat1, mat2):
                 return None
         else:
             mat1[i] += mat2[i]
-    return mat1
+    return mat1.copy()
