@@ -11,13 +11,12 @@ def add_matrices(mat1, mat2):
         mat2 (list): The second matrix to add
 
     Returns:
-        A new matrix that is the sum of mat1 and mat2, or None if matrices are not the same shape
+        A new matrix that is the sum of mat1 and mat2,
+        or None if matrices are not the same shape
     """
     if len(mat1) != len(mat2):
         return None
     for i in range(len(mat1)):
-        if type(mat1[i]) != type(mat2[i]):
-            return None
         if isinstance(mat1[i], list):
             if len(mat1[i]) != len(mat2[i]):
                 return None
@@ -26,4 +25,4 @@ def add_matrices(mat1, mat2):
                 return None
         else:
             mat1[i] += mat2[i]
-    return mat1 
+    return mat1
