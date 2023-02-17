@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """ func that imports numpy library """
 
-import numpy as np
-
 
 def np_slice(matrix, axes={}):
     """The function first initializes a list of slice(None) objects,
