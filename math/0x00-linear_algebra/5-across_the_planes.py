@@ -4,7 +4,9 @@
 
 def add_matrices2D(mat1, mat2):
     """matrix"""
-    if len(mat1[0]) != len(mat2[0]):
+    if len(mat1[0]) != len(mat2[0]) :
+        return None
+    if (mat1 == None) :
         return None
     res_matx = [[None for i in range(len(mat1))] for j in range(len(mat1[0]))]
     for i in range(len(mat1[0])):
