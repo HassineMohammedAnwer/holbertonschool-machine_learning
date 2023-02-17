@@ -9,7 +9,8 @@ def matrix_transpose(matrix):
             res_matx[j] = i
             j += 1
             c += 1"""
-    res_matx = [[None for i in range(len(matrix))] for j in range(len(matrix[0]))]
+    res_matx = [[None
+                 for i in range(len(matrix))] for j in range(len(matrix[0]))]
     for i in range(len(matrix[0])):
         for j in range(len(matrix)):
             res_matx[i][j] = matrix[j][i]
