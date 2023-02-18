@@ -3,19 +3,9 @@
 
 
 def poly_integral(poly, C=0):
-    """
-    Calculates the integral of a polynomial.
-
-    Args:
-        poly (list): List of coefficients representing a polynomial
-        C (int): Integration constant
-
-    Returns:
-        list of coefficients representing the integral of the poly
-    """
-    if not isinstance(poly, list) or len(poly) == 0:
+    if not isinstance(poly, list) or len(poly) == 0 or poly is None  or type(C) is not int:
         return None
-    if poly == [0] or poly is None or type(C) is not int:
+    if poly == [0]:
         return [C]
     new_poly = [C]
     for i, coeff in enumerate(poly):
