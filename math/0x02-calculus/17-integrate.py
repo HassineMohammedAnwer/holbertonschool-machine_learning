@@ -3,7 +3,10 @@
 
 
 def poly_integral(poly, C=0):
-    if not isinstance(poly, list) or len(poly) == 0 or poly is None  or type(C) is not int:
+    """ljhlkjlklk"""
+    if not isinstance(poly, list) or len(poly) == 0:
+        return None
+    if poly is None or type(C) is not int:
         return None
     if poly == [0]:
         return [C]
