@@ -34,12 +34,16 @@ class Poisson:
         return ((Poisson.e**(-1 * self.lambtha) * lpowk) / fact)
 
     def cdf(self, k):
-        """Calculates the value of the CDF for a given number of “successes”"""
+        """Calculates the value of the CDF for a given number of “successes”
+        k is the number of “successes”
+        If k is not an integer, convert it to an integer
+        If k is out of range, return 0
+        Returns the CDF value for k"""
         if not isinstance(k, int):
             k = int(k)
-        if k <= 0:
+        if k < 0:
             return 0
-        cdf = 0
-        for i in range(0, k + 1):
-            cdf += self.pmf(i)
-        return cdf
+        cdf_val = 0
+        for i in range(k + 1):
+            cdf_val += self.pmf(i)
+        return cdf_val
