@@ -38,12 +38,16 @@ class Poisson:
         k is the number of “successes”
         If k is not an integer, convert it to an integer
         If k is out of range, return 0
-        Returns the CDF value for k"""
+        Returns the CDF value for k
+        """
         if not isinstance(k, int):
             k = int(k)
         if k < 0:
             return 0
-        cdf_val = 0
+        cdf = 0
         for i in range(k + 1):
-            cdf_val += self.pmf(i)
-        return cdf_val
+            fact = 1
+            for j in range(1, i + 1):
+                fact = fact * j
+            cdf += self.lambtha**i / fact
+        return Poisson.e**((-1) * self.lambtha) * cdf
