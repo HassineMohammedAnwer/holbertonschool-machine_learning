@@ -3,6 +3,7 @@
 
 
 class Normal:
+    """class normal"""
     def __init__(self, data=None, mean=0., stddev=1.):
         """Initialize Normal"""
         if data is None:
