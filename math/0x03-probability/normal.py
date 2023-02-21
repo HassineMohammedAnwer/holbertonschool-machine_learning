@@ -4,6 +4,8 @@
 
 class Normal:
     """class normal"""
+    e = 2.7182818285
+    pi = 3.1415926536
     def __init__(self, data=None, mean=0., stddev=1.):
         """Initialize Normal"""
         if data is None:
@@ -29,3 +31,9 @@ class Normal:
     def x_value(self, z):
         """calculates the x-value of a given z-score"""
         return self.mean + z * self.stddev
+
+    def pdf(self, x):
+        """calculates the probability density function for a given x-value"""
+        exponent = -0.5 * ((x - self.mean) / self.stddev) ** 2
+        coefficient = 1 / (self.stddev * ((2 * Normal.pi) ** 0.5))
+        return coefficient * (Normal.e ** exponent)
