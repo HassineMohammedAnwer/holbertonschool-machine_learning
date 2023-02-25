@@ -38,7 +38,12 @@ class Neuron:
     def cost(self, Y, A):
         """defines a single"""
         m = Y.shape[1]
-        xmp = np.sum(Y * np.log(A))
-        ymp = np.log(1.0000001 - A)
-        cost = - (1 / m) * np.sum(xmp) + np.sum((1 - Y) * ymp)
+        cost = - (1 / m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
         return cost
+
+    def evaluate(self, X, Y):
+        """qlkqlk"""
+        self.__A = self.forward_prop(X)
+        prediction = np.where(self.__A >= 0.5, 1, 0)
+        cost = self.cost(Y, self.__A)
+        return prediction, cost
