@@ -38,7 +38,6 @@ class Neuron:
     def cost(self, Y, A):
         """defines a single"""
         m = Y.shape[1]
-        xmp = np.sum(Y * np.log(A))
-        ymp = np.log(1.0000001 - A)
-        cost = - (1 / m) * np.sum(xmp) + np.sum((1 - Y) * ymp)
+        xmp = (1 - Y)
+        cost = - (1 / m) * (np.sum(Y * np.log(A) + xmp * np.log(1.0000001 - A)))
         return cost
