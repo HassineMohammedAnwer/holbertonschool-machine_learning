@@ -39,5 +39,5 @@ class Neuron:
         """defines a single"""
         m = Y.shape[1]
         xmp = (1 - Y)
-        cost = - (1 / m) * (np.sum(Y * np.log(A) + xmp * np.log(1.0000001 - A)))
-        return cost
+        RES = - (1 / m) * (np.sum(Y * np.log(A) + xmp * np.log(1.0000001 - A)))
+        return RES
