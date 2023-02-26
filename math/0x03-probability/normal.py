@@ -38,3 +38,9 @@ class Normal:
         exponent = -0.5 * ((x - self.mean) / self.stddev) ** 2
         coefficient = 1 / (self.stddev * ((2 * Normal.pi) ** 0.5))
         return coefficient * (Normal.e ** exponent)
+
+    def cdf(self, x):
+        """calculates the cumulative distribution function for a given x-value"""
+        x_norm = (x - self.mean) / (self.stddev * (2 ** 0.5))
+        erf_term = (2 / (Normal.pi ** 0.5)) * (x_norm - (x_norm ** 3) / 3 + (x_norm ** 5) / 10 - (x_norm ** 7) / 42 + (x_norm ** 9) / 216)
+        return (1 / 2) * (1 + erf_term)
