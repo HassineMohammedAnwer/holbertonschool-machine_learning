@@ -38,12 +38,13 @@ class Neuron:
     def cost(self, Y, A):
         """defines a single"""
         m = Y.shape[1]
-        cost = - (1 / m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
-        return cost
+        xmp = (1 - Y)
+        RES = - (1 / m) * (np.sum(Y * np.log(A) + xmp * np.log(1.0000001 - A)))
+        return RES
 
     def evaluate(self, X, Y):
-        """qlkqlk"""
-        self.__A = self.forward_prop(X)
-        prediction = np.where(self.__A >= 0.5, 1, 0)
+        """evaluates the neuron’s predictions"""
+        self.forward_prop(X)
         cost = self.cost(Y, self.__A)
-        return prediction, cost
+        predicted_labels = np.where(self.__A >= 0.5, 1, 0)
+        return predicted_labels, cost
