@@ -25,17 +25,24 @@ class Binomial:
         self.n = int(self.n)
         self.p = float(self.p)
 
-    @staticmethod
-    def factorial(n):
-        """ function that calc the fact """
-        factorial_num = 1
-        for m in range(1, n + 1):
-            factorial_num *= m
-        return factorial_num
-
     def pmf(self, k):
         """Calculates the value of the PMF for a given number of successes"""
         k = int(k)
         if k < 0 or k > self.n:
             return 0
         return (self.factorial(self.n) / (self.factorial(k) * self.factorial(self.n - k))) * (self.p ** k) * ((1 - self.p) ** (self.n - k))
+
+    def cdf(self, k):
+        """Calculates the value of the CDF for a given number of successes"""
+        k = int(k)
+        if k < 0:
+            return 0
+        if k >= self.n:
+            return 1
+        return sum(self.pmf(i) for i in range(k + 1))
+
+    def factorial(self, n):
+        """Calculates the factorial of a given number"""
+        if n == 0:
+            return 1
+        return n * self.factorial(n - 1)
