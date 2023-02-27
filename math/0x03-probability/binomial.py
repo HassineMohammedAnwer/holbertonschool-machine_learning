@@ -30,9 +30,9 @@ class Binomial:
         k = int(k)
         if k < 0 or k > self.n:
             return 0
-        xmp = (self.factorial(self.n) / (self.factorial(k) * self.factorial(self.n - k)))
+        dnmnfct = self.factorial(self.n)
+        xmp = (dnmnfct / (self.factorial(k) * self.factorial(self.n - k)))
         ymp = (self.p ** k) * ((1 - self.p) ** (self.n - k))
-
         return (xmp * ymp)
 
     def cdf(self, k):
