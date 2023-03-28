@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 
 def calculate_loss(y, y_pred):
@@ -14,9 +14,6 @@ def calculate_loss(y, y_pred):
     Returns:
     tensor containing the loss of the prediction
     """
-
-    # Calculate cross-entropy loss
     loss = tf.losses.softmax_cross_entropy(y, y_pred)
 
     return loss
-
