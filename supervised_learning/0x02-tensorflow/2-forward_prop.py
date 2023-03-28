@@ -6,14 +6,15 @@ tf.disable_eager_execution()
 
 create_layer = __import__('1-create_layer').create_layer
 
+
 def forward_prop(x, layer_sizes=[], activations=[]):
     """
     Creates the forward propagation graph for a neural network
 
     Arguments:
     x -- placeholder for the input data
-    layer_sizes -- list containing the number of nodes in each layer of the network
-    activations -- list containing the activation functions for each layer of the network
+    layer_sizes -- list containing the number of nodes in each layer of .nk
+    activations -- list containing the activation functions for each .nk layer
 
     Returns:
     prediction of the network in tensor form
