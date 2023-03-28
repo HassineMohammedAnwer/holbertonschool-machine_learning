@@ -3,6 +3,7 @@
 
 import tensorflow.compat.v1 as tf
 
+
 def create_train_op(loss, alpha):
     """
     Creates the training operation for the network using gradient descent.
@@ -17,4 +18,3 @@ def create_train_op(loss, alpha):
     op = tf.train.GradientDescentOptimizer(alpha)
     train_op = op.minimize(loss)
     return train_op
-
