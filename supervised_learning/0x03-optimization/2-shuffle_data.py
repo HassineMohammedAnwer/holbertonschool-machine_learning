@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Shuffles"""
 
 import numpy as np
 
