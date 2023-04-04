@@ -59,7 +59,11 @@ class Neuron:
         self.__b = self.__b - (alpha * db)
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
-        """mkjmkjkh"""
+        """checks the iterations and alpha are of the correct types and values.
+        Then, it loops over the range of iterations and performs
+        forward propagation and gradient descent at each iteration.
+        After the loop, it evaluates the trained model on the training data
+        using the evaluate method and returns the predicted values and cost."""
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
