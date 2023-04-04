@@ -41,10 +41,3 @@ class Neuron:
         xmp = (1 - Y)
         RES = - (1 / m) * (np.sum(Y * np.log(A) + xmp * np.log(1.0000001 - A)))
         return RES
-
-    def evaluate(self, X, Y):
-        """Evaluates the neuron’s predictions"""
-        self.forward_prop(X)
-        cost = self.cost(Y, self.__A)
-        predicted_labels = np.where(self.__A >= 0.5, 1, 0)
-        return predicted_labels, cost
