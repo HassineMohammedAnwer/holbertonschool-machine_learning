@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-
+"""mlhjczmj"""
 import numpy as np
 
 
 def convolve_grayscale_valid(images, kernel):
+    """flmefvlù"""
     m, h, w = images.shape
     kh, kw = kernel.shape
     output_h = h - kh + 1
