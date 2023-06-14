@@ -75,6 +75,7 @@ class NeuralNetwork:
         predictions = np.where(A >= 0.5, 1, 0)
         cost = self.cost(Y, A)
         return (predictions, cost)
+
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
         """gradient_descent"""
         m = X.shape[1]
