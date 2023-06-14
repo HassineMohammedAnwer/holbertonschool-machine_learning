@@ -49,6 +49,9 @@ class NeuralNetwork:
         return self.__A2
 
     def forward_prop(self, X):
+        """The result of the first layer's activation is stored in 
+        the private attribute self.A1, and the output layer's 
+        activation is stored in self.A2."""
         Z1 = np.dot(self.__W1, X) + self.__b1
         self.__A1 = 1 / (1 + np.exp(-Z1))
 
