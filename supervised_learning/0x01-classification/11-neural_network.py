@@ -63,7 +63,6 @@ class NeuralNetwork:
         """calculates the cost of the model using logistic regression"""
         m = Y.shape[1]
         epsilon = 0.0000001
-
-        cost = -np.sum(Y * np.log(A + epsilon) + (1 - Y) * np.log(1 - A + epsilon)) / m
-
+        log_loss = -(Y * np.log(A) + (1 - Y) * np.log(epsilon + 1 - A))
+        cost = np.mean(log_loss)
         return cost
