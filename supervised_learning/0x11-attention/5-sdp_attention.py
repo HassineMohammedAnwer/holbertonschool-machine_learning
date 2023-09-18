@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-
+"""ln,ùlkn,"""
 import tensorflow as tf
 
 
 def sdp_attention(Q, K, V, mask=None):
-    """the scaled dot product attention."""
+    """the scaled dot product attention.
+    """
     product = tf.matmul(Q, K, transpose_b=True)
 
     # Scale
