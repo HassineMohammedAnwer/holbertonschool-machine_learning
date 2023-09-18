@@ -24,12 +24,12 @@ class RNNCell:
         The output of the cell should use a softmax activation function
         h_next is the next hidden state
         y is the output of the cell"""
-        #calculate new hidden state
+        # calculate new hidden state
         x_concat = np.concatenate((h_prev, x_t), axis=1)
         h_next = np.matmul(x_concat, self.Wh) + self.bh
         h_next = np.tanh(h_next)
         y = np.matmul(h_next, self.Wy) + self.by
-        #softmax
+        # softmax
         y = np.exp(y) / np.sum(np.exp(y), axis=1, keepdims=True)
 
         return (h_next, y)

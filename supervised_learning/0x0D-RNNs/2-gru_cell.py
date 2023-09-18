@@ -34,7 +34,7 @@ class GRUCell:
 
     def forward(self, h_prev, x_t):
         """forward propagation for one time step"""
-        comb1= np.concatenate((h_prev, x_t), axis=1)
+        comb1 = np.concatenate((h_prev, x_t), axis=1)
         """update gate"""
         z_t = sigmoid((comb1 @ self.Wz) + self.bz)
         """reset gate"""
@@ -46,4 +46,3 @@ class GRUCell:
 
         y = softmax((s_t @ self.Wy) + self.by)
         return s_t, y
-
