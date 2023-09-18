@@ -15,11 +15,11 @@ class SelfAttention(tf.keras.layers.Layer):
     def call(self, s_prev, hidden_states):
         """compute the alignment scores, weights, and context"""
         s_prev_dims = tf.expand_dims(s_prev, 1)
-        #Alignment scores. Pass them through tanh function
-        scores = self.V(tf.nn.tanh(self.W(s_prev_dims) + self.U(hidden_states)))
-        #Compute the weights
-        w_attention = tf.nn.softmax(scores, axis=1)
-        #Compute the context vector
+        # Alignment scores. Pass them through tanh function
+        scrs = self.V(tf.nn.tanh(self.W(s_prev_dims) + self.U(hidden_states)))
+        # Compute the weights
+        w_attention = tf.nn.softmax(scrs, axis=1)
+        # Compute the context vector
         context = w_attention * hidden_states
         context = tf.reduce_sum(context, axis=1)
 

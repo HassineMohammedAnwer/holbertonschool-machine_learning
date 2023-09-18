@@ -21,9 +21,9 @@ class RNNDecoder(tf.keras.layers.Layer):
     def call(self, x, s_prev, hidden_states):
         """the decoder
         """
-        #context vector
+        # context vector
         context, attention_weights = self.attention(s_prev,
-                                                hidden_states)
+                                                    hidden_states)
 
         # Embed previous input in target sequence
         x = self.embedding(x)
