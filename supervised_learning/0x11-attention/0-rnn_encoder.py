@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Encode for machine translation"""
-
 import tensorflow as tf
 
 
 class RNNEncoder(tf.keras.layers.Layer):
     """param: --> self , vocab, embedding, units, batch"""
+
     def __init__(self, vocab, embedding, units, batch):
-        """ml;m"""
+        """ml;m
+        """
         super(RNNEncoder, self).__init__()
         self.batch = batch
         self.units = units
@@ -18,10 +19,12 @@ class RNNEncoder(tf.keras.layers.Layer):
                                        return_state=True)
 
     def initialize_hidden_state(self):
-        """returns initialized hidden states"""
+        """returns initialized hidden states
+        """
         return tf.keras.initializers.Zeros()(shape=(self.batch, self.units))
 
     def call(self, x, initial):
-        """returns outputs of the encoder and its last hidden state"""
+        """returns outputs of the encoder and its last hidden state
+         """
         outputs, hidden = self.gru(self.embedding(x), initial_state=initial)
         return outputs, hidden
