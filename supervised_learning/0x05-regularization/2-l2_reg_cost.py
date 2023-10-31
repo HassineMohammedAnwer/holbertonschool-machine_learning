@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """cost of a neural network with L2 regularization"""
-import numpy as np
+import tensorflow.compat.v1 as tf
 
 
 def l2_reg_cost(cost):
