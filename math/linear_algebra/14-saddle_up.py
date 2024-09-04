@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" func that imports numpy library """
+""" func that performs multiplication on matrices"""
 
 import numpy as np
 
