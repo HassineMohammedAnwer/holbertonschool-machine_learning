@@ -9,7 +9,7 @@ def np_slice(matrix, axes={}):
     Args:
         matrix : The matrix to slice
         axes: dictionary where the key is an axis to slice along and
-              the value is a tuple representing the slice to make along that axis
+              the value is a tuple representing the slice to make along axis
 
     Returns:
         A sliced matrix
