@@ -1,29 +1,22 @@
 #!/usr/bin/env python3
-""" func that imports numpy library """
+""" slices matrices """
+
+import numpy as np
 
 
-def add_matrices(mat1, mat2):
+def np_slice(matrix, axes={}):
     """
-    Adds two matrices element-wise.
+    slices a  matrix along specific axes.
 
     Args:
-        mat1 (list): The first matrix to add
-        mat2 (list): The second matrix to add
+        matrix : The matrix to slice
+        axes: dictionary where the key is an axis to slice along and
+              the value is a tuple representing the slice to make along that axis
 
     Returns:
-        A new matrix that is the sum of mat1 and mat2, or None if matrices are not the same shape
+        A sliced matrix
     """
-    if len(mat1) != len(mat2):
-        return None
-    for i in range(len(mat1)):
-        if type(mat1[i]) != type(mat2[i]):
-            return None
-        if isinstance(mat1[i], list):
-            if len(mat1[i]) != len(mat2[i]):
-                return None
-            mat1[i] = add_matrices(mat1[i], mat2[i])
-            if mat1[i] is None:
-                return None
-        else:
-            mat1[i] += mat2[i]
-    return mat1 
+    slices = [slice(None)] * len(matrix.shape)
+    for axis, slice_val in axes.items():
+        slices[axis] = slice(*slice_val)
+    return matrix[tuple(slices)]
