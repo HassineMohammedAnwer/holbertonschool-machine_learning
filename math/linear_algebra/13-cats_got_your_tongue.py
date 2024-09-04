@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """ func that imports numpy library """
-
 import numpy as np
 
 
