@@ -14,7 +14,7 @@ def scatter():
     y += 180
     plt.figure(figsize=(6.4, 4.8))
 
-    plt.plot(x, y, color= "#cc31ca", 'm.')
+    plt.plot(x, y, color= "#cc31ca")
     plt.suptitle('Men\'s Height vs Weight')
     plt.xlabel('Height (in)')
     plt.ylabel('Weight (lbs)')
