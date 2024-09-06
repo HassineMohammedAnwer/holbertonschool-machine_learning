@@ -19,10 +19,10 @@ class DeepNeuralNetwork:
 
         self.__L = len(layers)
         self.__cache = {}
-        self.__weights = {'W1':
-                        np.random.randn(layers[0], nx) * np.sqrt(2 / nx),
-                        'b1': np.zeros((layers[0], 1))
-                        }
+        self.__weights = {
+            'W1': np.random.randn(layers[0], nx) * np.sqrt(2 / nx),
+            'b1': np.zeros((layers[0], 1))
+        }
 
         for i in range(1, self.L):
             self.__weights["W" + str(i + 1)] =\
@@ -49,10 +49,10 @@ class DeepNeuralNetwork:
         """forward propagation of the neural network"""
         self.__cache["A0"] = X
         A = X
-        for l in range(1, self.L + 1):
-            Z = np.dot(self.weights[f"W{l}"], A) + self.weights[f"b{l}"]
+        for i in range(1, self.L + 1):
+            Z = np.dot(self.weights[f"W{i}"], A) + self.weights[f"b{i}"]
             A = 1 / (1 + np.exp(-Z))
-            self.__cache[f"A{l}"] = A
+            self.__cache[f"A{i}"] = A
 
         return A, self.__cache
 
