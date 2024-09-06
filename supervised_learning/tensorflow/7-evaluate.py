@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """7. Evaluate"""
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 
 def evaluate(X, Y, save_path):
