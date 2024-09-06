@@ -24,6 +24,6 @@ def bars():
     ax.set_ylabel('Quantity of Fruit')
     ax.set_title('Number of Fruit per Person')
     ax.set_ylim([0, 80])
-    ax.set_yticks(np.arange(0, 80, 10))
+    ax.set_yticks(np.arange(0, 81, 10))
     ax.legend()
     plt.show()
