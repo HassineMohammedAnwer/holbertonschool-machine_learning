@@ -40,7 +40,7 @@ def all_in_one():
     plt.title('Men\'s Height vs Weight', size='x-small')
     plt.xlabel('Height (in)', size='x-small')
     plt.ylabel('Weight (lbs)', size='x-small')
-    plt.plot(x1, y1, 'm.')
+    plt.scatter(x1, y1, color="#FF00FF")
     #-------------3--------
     plt.subplot(323)
     plt.yscale('log')
@@ -64,6 +64,7 @@ def all_in_one():
     plt.title('Project A', size='x-small')
     plt.xlabel('Grades', size='x-small')
     plt.ylabel('Number of Students', size='x-small')
+    plt.axis([0, 100, 0, 30])
     plt.xlim(0, 100)
     plt.ylim(0, 30)
     plt.hist(student_grades, bins=range(0, 101, 10), edgecolor='black')
