@@ -15,7 +15,7 @@ def bars():
     person = ["Farrah", "Fred", "Felicia"]
     color = ['red', 'yellow', '#ff8000', '#ffe5b4']
     fru = ['apples', 'bananas', 'oranges', 'peaches']
-    bottom = np.zeros(len(people))
+    bottom = np.zeros(len(person))
     for i, row in enumerate(fruit):
         ax.bar(person, row, bottom=bottom,
                color=color[i], label=fru[i], width=0.5)
