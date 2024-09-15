@@ -11,19 +11,23 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     keep_prob= proba that node'll be kept
     L= num of layers"""
     m = Y.shape[1]
-    # Backward propagation
-    for i in range(L - 1, -1, -1):
-        A_prev = cache['A' + str(i)]
-        W = weights['W' + str(i + 1)]
-        b = weights['b' + str(i + 1)]
-        A = cache['A' + str(i + 1)]
-        if i == L - 1:
-            rs = A - Y
-        else:
-            D = cache['D' + str(i + 1)]
-            rs = np.matmul(weights['W' + str(i + 1)].T, rs) * \
-                (1 - (A * A)) * D / keep_prob
-        dW = np.matmul(rs, A_prev.T) / m
-        db = np.sum(rs, axis=1, keepdims=True) / m
-        weights['W' + str(i)] = weights["W" + str(i)] - (alpha * dW)
-        weights['b' + str(i)] = weights["b" + str(i)] - (alpha * db)
+    dz = cache['A' + str(L)] - Y
+    for i in range(L, 0, -1):
+        A_prev = cache['A' + str(i - 1)]
+        W = weights['W' + str(i)]
+
+
+        dW = (1 / m) * np.dot(dz, A_prev.T)
+        db = (1 / m) * np.sum(dz, axis = 1, keepdims=True)
+
+        # for all layers except the output layer
+        if i > 1:
+            dA_prev = np.dot(W.T, dz)
+            D = cache['D' + str(i - 1)]
+            dA_prev = np.multiply(dA_prev, D)
+            dA_prev /= keep_prob
+
+            dz = dA_prev * (1 - A_prev ** 2)
+
+        weights['W' + str(i)] -= alpha * dW
+        weights['b' + str(i)] -= alpha * db
