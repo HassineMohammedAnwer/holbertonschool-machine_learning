@@ -3,10 +3,11 @@
 import numpy as np
 from scipy import special
 
+
 def likelihood(x, n, P):
     """calculates the likelihood of obtaining
     this data given various hypothetical probabilities
-    of developing severe side effects"""    
+    of developing severe side effects"""
     n_fa = 1
     for i in range(1, n + 1):
         n_fa *= i
