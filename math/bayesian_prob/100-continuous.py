@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Marginal Probability"""
-import numpy as np
 from scipy import special
 
 
