@@ -1,42 +1,38 @@
 #!/usr/bin/env python3
 
 import numpy as np
-import tensorflow.compat.v1 as tf
-tf.disable_eager_execution()
+import tensorflow as tf
+import os
+import random
+
+SEED = 0
+
+os.environ['PYTHONHASHSEED'] = str(SEED)
+os.environ['TF_ENABLE_ONEDNN_OPTS']= '0'
+random.seed(SEED)
+np.random.seed(SEED)
+tf.random.set_seed(SEED)
+
 l2_reg_cost = __import__('2-l2_reg_cost').l2_reg_cost
 
 def one_hot(Y, classes):
     """convert an array to a one-hot matrix"""
     m = Y.shape[0]
-    oh = np.zeros((classes, m))
-    oh[Y, np.arange(m)] = 1
+    oh = np.zeros((m, classes))
+    oh[np.arange(m), Y] = 1
     return oh
 
-np.random.seed(4)
 m = np.random.randint(1000, 2000)
 c = 10
 lib= np.load('../data/MNIST.npz')
 
 X = lib['X_train'][:m].reshape((m, -1))
-Y = one_hot(lib['Y_train'][:m], c).T
+Y = one_hot(lib['Y_train'][:m], c)
 
-n0 = X.shape[1]
-n1, n2 = np.random.randint(10, 1000, 2)
+model_reg = tf.keras.models.load_model('../data/model_reg.h5', compile=False)
 
-lam = 0.09
-tf.set_random_seed(0)
+Predictions = model_reg(X)
+cost = tf.keras.losses.CategoricalCrossentropy()(Y, Predictions)
 
-x = tf.placeholder(tf.float32, (None, n0))
-y = tf.placeholder(tf.float32, (None, c))
-
-a1 = tf.layers.Dense(n1, activation=tf.nn.tanh, kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg")), kernel_regularizer=tf.keras.regularizers.L2(lam))(x)
-a2 = tf.layers.Dense(n2, activation=tf.nn.sigmoid, kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg")), kernel_regularizer=tf.keras.regularizers.L2(lam))(a1)
-y_pred = tf.layers.Dense(c, activation=None, kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg")), kernel_regularizer=tf.keras.regularizers.L2(lam))(a2)
-
-cost = tf.losses.softmax_cross_entropy(y, y_pred)
-
-l2_cost = l2_reg_cost(cost)
-
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    print(sess.run(l2_cost, feed_dict={x: X, y: Y}))
+l2_cost = l2_reg_cost(cost,model_reg)
+print(l2_cost)

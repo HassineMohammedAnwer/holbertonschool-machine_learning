@@ -3,7 +3,10 @@
 import tensorflow as tf
 
 
-def l2_reg_cost(cost):
+def l2_reg_cost(cost, model):
     """mljlj poiùp ùpi"""
-    cost += tf.losses.get_regularization_losses()
-    return cost
+    l2_reg_loss = list()
+    for layer in model.layers:
+        l2_reg_loss.append(tf.reduce_sum(layer.losses) + cost)
+
+    return tf.stack(l2_reg_loss[1:])
