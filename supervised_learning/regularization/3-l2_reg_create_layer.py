@@ -5,12 +5,13 @@ import tensorflow as tf
 
 def l2_reg_create_layer(prev, n, activation, lambtha):
     """L2 reg """
+    l2_regularizer = tf.keras.regularizers.L2(lambtha)
 
-    initi = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    regularizers = tf.contrib.layers.l2_regularizer(lambtha)
-    layer = tf.layers.Dense(units=n,
-                            activation=activation,
-                            use_bias=True,
-                            kernel_initializer=initi,
-                            kernel_regularizer=regularizers)
+    layer = tf.keras.layers.Dense(
+        units=n,
+        activation=activation,
+        kernel_regularizer=l2_regularizer
+    )
+
+    # Apply the layer to the previous tensor (prev)
     return layer(prev)
