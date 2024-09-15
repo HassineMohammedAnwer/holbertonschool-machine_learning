@@ -3,7 +3,7 @@
 import tensorflow as tf
 
 
-def dropout_create_layer(prev, n, activation, keep_prob,training=True):
+def dropout_create_layer(prev, n, activation, keep_prob, training=True):
     """prev tensor = output of the previous layer
     n number of nodes the new layer
     activation function that should be used on the layer
