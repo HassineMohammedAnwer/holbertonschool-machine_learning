@@ -22,6 +22,7 @@ def likelihood(x, n, P):
         likelihoods[i] = b_coefficient * (p ** x) * ((1 - p) ** (n - x))
     return likelihoods
 
+
 def intersection(x, n, P, Pr):
     """intersection = likelihood * prior"""
     likelihoods = likelihood(x, n, P)
@@ -29,6 +30,7 @@ def intersection(x, n, P, Pr):
     intersections = likelihoods * Pr
 
     return intersections
+
 
 def marginal(x, n, P, Pr):
     """intersection = likelihood * prior"""

@@ -22,6 +22,7 @@ def likelihood(x, n, P):
         likelihoods[i] = b_c * (p ** x) * ((1 - p) ** (n - x))
     return likelihoods
 
+
 def intersection(x, n, P, Pr):
     """intersection = likelihood * prior"""
     if not isinstance(n, int) or n <= 0:
