@@ -16,9 +16,8 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
         A_prev = cache['A' + str(i - 1)]
         W = weights['W' + str(i)]
 
-
         dW = (1 / m) * np.dot(dz, A_prev.T)
-        db = (1 / m) * np.sum(dz, axis = 1, keepdims=True)
+        db = (1 / m) * np.sum(dz, axis=1, keepdims=True)
 
         # for all layers except the output layer
         if i > 1:
