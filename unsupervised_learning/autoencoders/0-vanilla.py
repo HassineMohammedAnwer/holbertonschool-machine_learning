@@ -7,8 +7,8 @@ import tensorflow.keras as keras
 def autoencoder(input_dims, hidden_layers, latent_dims):
     """
     creates an autoencoder, model should be compiled using adam optimization
-    and binary cross-entropy loss. All layers should use a relu activation except
-    for the last layer in the decoder, which should use sigmoid
+    and binary cross-entropy loss. All layers should use a relu activation
+    except for the last layer in the decoder, which should use sigmoid
     Args:
         input_dims: integer containing the dimensions of the model input
         hidden_layers: list containing the number of nodes for each hidden
