@@ -6,8 +6,8 @@ import tensorflow.keras as keras
 
 def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     """
-    creates a sparse  autoencoder, model should be compiled using adam optimization
-    and binary cross-entropy loss. All layers should use a relu activation
+    creates a sparse  autoencoder, model should be compiled using adam
+    optimization and binary cross-entropy loss. All layers should use relu
     except for the last layer in the decoder, which should use sigmoid
     Args:
         input_dims: integer containing the dimensions of the model input
@@ -23,12 +23,13 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
             decoder: decoder model
             auto: the full autoencoder model
     """
+    L1 = keras.regularizers.l1(lambtha)
     inputs = keras.Input(shape=(input_dims,))
     x = inputs
     for units in hidden_layers:
         x = keras.layers.Dense(units, activation='relu')(x)
     latent = keras.layers.Dense(latent_dims, activation='relu',
-                                activity_regularizer = keras.regularizers.l1(lambtha))(x)
+                                activity_regularizer=L1)(x)
 
     encoder = keras.Model(inputs, latent, name='encoder')
 
