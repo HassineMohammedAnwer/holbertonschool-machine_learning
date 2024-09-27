@@ -8,4 +8,4 @@ def bi_rnn(bi_cell, X, h_0, h_t):
     t, m, i = X.shape
     h = h_0.shape[1]
 
-return H, Y
+    return H, Y
