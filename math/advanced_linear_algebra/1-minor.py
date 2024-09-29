@@ -5,9 +5,10 @@
 def determinant(matrix):
     """ calculates the determinant of a matrix"""
     n = len(matrix)
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    if (not isinstance(matrix, list)
+            or not all(isinstance(row, list) for row in matrix)):
         raise TypeError("matrix must be a list of lists")
-    
+
     if n == 0 or any(len(row) != n for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
     if n == 1:
@@ -28,7 +29,8 @@ def determinant(matrix):
 def minor(matrix):
     """ calculates the minor matrix of a matrix"""
     n = len(matrix)
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    if (not isinstance(matrix, list)
+            or not all(isinstance(row, list) for row in matrix)):
         raise TypeError("matrix must be a list of lists")
     if n == 0 or any(len(row) != n for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
