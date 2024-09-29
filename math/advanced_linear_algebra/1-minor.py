@@ -31,8 +31,6 @@ def minor(matrix):
     n = len(matrix)
     if n == 1:
         return [[1]]
-    if n != 1 and not all(len(row) == n for row in matrix):
-        raise ValueError("matrix must be a square matrix")
     if n == 0 or len(matrix[0]) != n:
         raise ValueError("matrix must be a non-empty square matrix")
     minor_matrix = []
