@@ -52,12 +52,10 @@ def cofactor(matrix):
     if not all(isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a list of lists")
     n = len(matrix)
-    if n == 1:
-        return [[1]]
-    if n != 1 and not all(len(row) == n for row in matrix):
-        raise ValueError("matrix must be a square matrix")
     if n == 0 or len(matrix[0]) != n:
         raise ValueError("matrix must be a non-empty square matrix")
+    if n == 1:
+        return [[1]]
     # Calculate the minor matrix
     minor_matrix = minor(matrix)
     cofactor_m = []
