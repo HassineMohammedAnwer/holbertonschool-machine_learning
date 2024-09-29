@@ -24,17 +24,6 @@ def determinant(matrix):
 
 def minor(matrix):
     """ calculates the minor matrix of a matrix"""
-    if not isinstance(matrix, list) or not matrix:
-        raise TypeError("matrix must be a list of lists")
-    if not all(isinstance(row, list) for row in matrix):
-        raise TypeError("matrix must be a list of lists")
-    n = len(matrix)
-    if n == 1:
-        return [[1]]
-    if n != 1 and not all(len(row) == n for row in matrix):
-        raise ValueError("matrix must be a square matrix")
-    if n == 0 or len(matrix[0]) != n:
-        raise ValueError("matrix must be a non-empty square matrix")
     minor_matrix = []
 
     for i in range(len(matrix)):
@@ -54,3 +43,31 @@ def minor(matrix):
         minor_matrix.append(minor_row)
 
     return minor_matrix
+
+
+def cofactor(matrix):
+    """calculates the cofactor matrix of a matrix"""
+    if not isinstance(matrix, list) or not matrix:
+        raise TypeError("matrix must be a list of lists")
+    if not all(isinstance(row, list) for row in matrix):
+        raise TypeError("matrix must be a list of lists")
+    n = len(matrix)
+    if n == 1:
+        return [[1]]
+    if n != 1 and not all(len(row) == n for row in matrix):
+        raise ValueError("matrix must be a square matrix")
+    if n == 0 or len(matrix[0]) != n:
+        raise ValueError("matrix must be a non-empty square matrix")
+    # Calculate the minor matrix
+    minor_matrix = minor(matrix)
+    cofactor_m = []
+
+    for i in range(len(minor_matrix)):
+        cofactor_row = []
+        # sign change
+        for j in range(len(minor_matrix[i])):
+            cofactor_value = (-1) ** (i + j) * minor_matrix[i][j]
+            cofactor_row.append(cofactor_value)
+        cofactor_m.append(cofactor_row)
+
+    return cofactor_m
