@@ -5,16 +5,13 @@
 def determinant(matrix):
     """ calculates the determinant of a matrix"""
     n = len(matrix)
-    for a in range(len(matrix)):
-        if type(matrix[a]) is not list:
-            raise TypeError("matrix must be a list of lists")
-        if len(matrix) != len(matrix[a]):
-            raise ValueError("matrix must be a square matrix")
-    # Check if the matrix is square and non-empty
-    if n != 1 and not all(len(row) == n for row in matrix):
+    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+        raise TypeError("matrix must be a list of lists")
+    
+    if n == 0 or any(len(row) != n for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
-    if n == 0:
-        return 1
+    if n == 1:
+        return matrix[0][0]
     if n == 2:
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
     det = 0
@@ -30,29 +27,15 @@ def determinant(matrix):
 
 def minor(matrix):
     """ calculates the minor matrix of a matrix"""
-    if not isinstance(matrix, list) or not matrix:
-        raise TypeError("matrix must be a list of lists")
-    if not all(isinstance(row, list) for row in matrix):
-        raise TypeError("matrix must be a list of lists")
     n = len(matrix)
+    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+        raise TypeError("matrix must be a list of lists")
+    if n == 0 or any(len(row) != n for row in matrix):
+        raise ValueError("matrix must be a non-empty square matrix")
     if n == 1:
         return [[1]]
-    for a in range(len(matrix)):
-        if len(matrix) != len(matrix[a]) or len(matrix[a]) == 0:
-            raise ValueError("matrix must be a non-empty square matrix")
-    # Check if the matrix is square and non-empty
-    if (n == 0 or n != len(matrix[0])) \
-            or matrix == [[]]:
-        raise ValueError("matrix must be a non-empty square matrix")
-    if n != 1 and not all(len(row) == n for row in matrix):
-        raise ValueError("matrix must be a non-empty square matrix")
-    # test square format of matrix
-    for row in matrix:
-        if len(row) != n:
-            raise ValueError("matrix must be a non-empty square matrix")
     minor_matrix = []
-
-    for i in range(len(matrix)):
+    for i in range(n):
         minor_row = []
         for j in range(len(matrix[i])):
             # create sub matrix removing i and j column
