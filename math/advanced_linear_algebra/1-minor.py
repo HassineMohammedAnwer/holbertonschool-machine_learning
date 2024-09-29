@@ -6,9 +6,6 @@ def determinant(matrix):
     """ calculates the determinant of a matrix"""
     n = len(matrix)
          # Check if the matrix is square and non-empty
-    if (n == 0 or n != len(matrix[0])) \
-            or matrix == [[]]:
-        raise ValueError("matrix must be a non-empty square matrix")
     if n != 1 and not all(len(row) == n for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
     if n == 0:
@@ -38,6 +35,8 @@ def minor(matrix):
      # Check if the matrix is square and non-empty
     if (n == 0 or n != len(matrix[0])) \
             or matrix == [[]]:
+        raise ValueError("matrix must be a non-empty square matrix")
+    if n != 1 and not all(len(row) == n for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
     # test square format of matrix
     for row in matrix:
