@@ -5,10 +5,14 @@
 def determinant(matrix):
     """ calculates the determinant of a matrix"""
     n = len(matrix)
-    if n == 0:
-        return 1
-    if n != 1 and not all(len(row) == n for row in matrix):
-        raise ValueError("matrix must be a square matrix")
+    if (not isinstance(matrix, list)
+            or not all(isinstance(row, list) for row in matrix)):
+        raise TypeError("matrix must be a list of lists")
+
+    if n == 0 or any(len(row) != n for row in matrix):
+        raise ValueError("matrix must be a non-empty square matrix")
+    if n == 1:
+        return matrix[0][0]
     if n == 2:
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
     det = 0
@@ -24,9 +28,16 @@ def determinant(matrix):
 
 def minor(matrix):
     """ calculates the minor matrix of a matrix"""
+    n = len(matrix)
+    if (not isinstance(matrix, list)
+            or not all(isinstance(row, list) for row in matrix)):
+        raise TypeError("matrix must be a list of lists")
+    if n == 0 or any(len(row) != n for row in matrix):
+        raise ValueError("matrix must be a non-empty square matrix")
+    if n == 1:
+        return [[1]]
     minor_matrix = []
-
-    for i in range(len(matrix)):
+    for i in range(n):
         minor_row = []
         for j in range(len(matrix[i])):
             # create sub matrix removing i and j column
@@ -47,12 +58,11 @@ def minor(matrix):
 
 def cofactor(matrix):
     """calculates the cofactor matrix of a matrix"""
-    if not isinstance(matrix, list) or not matrix:
-        raise TypeError("matrix must be a list of lists")
-    if not all(isinstance(row, list) for row in matrix):
-        raise TypeError("matrix must be a list of lists")
     n = len(matrix)
-    if n == 0 or len(matrix[0]) != n:
+    if (not isinstance(matrix, list)
+            or not all(isinstance(row, list) for row in matrix)):
+        raise TypeError("matrix must be a list of lists")
+    if n == 0 or any(len(row) != n for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
     if n == 1:
         return [[1]]
