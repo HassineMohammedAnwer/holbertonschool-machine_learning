@@ -14,7 +14,7 @@ def definiteness(matrix):
         return None
     if any(len(row) != n for row in matrix):
         raise None
-    
+
     eigen_values, _ = np.linalg.eig(matrix)
     min = np.min(eigen_values)
     max = np.max(eigen_values)
