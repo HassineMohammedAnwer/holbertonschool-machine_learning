@@ -7,10 +7,6 @@ def determinant(matrix):
     n = len(matrix)
     if n == 0:
         return 1
-     # test square format of matrix
-    for row in matrix:
-        if len(row) != n:
-            raise ValueError("matrix must be a non-empty square matrix")
     if n == 2:
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
     det = 0
