@@ -32,7 +32,9 @@ def minor(matrix):
     n = len(matrix)
     if n == 1:
         return [[1]]
-    if n != len(matrix[0]) or len(matrix[0]) == 0:
+     # Check if the matrix is square and non-empty
+    if (len(matrix) == 0 or len(matrix) != len(matrix[0])) \
+            or matrix == [[]]:
         raise ValueError("matrix must be a non-empty square matrix")
     minor_matrix = []
 
