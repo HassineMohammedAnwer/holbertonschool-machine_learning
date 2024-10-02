@@ -71,11 +71,7 @@ class DeepNeuralNetwork:
            The label values should be 1 if the output of the network is >= 0.5
            and 0 otherwise
         """
-        A, _ = self.forward_prop(X)  # Perform forward propagation
-
-        # Compute the predictions (1 if A >= 0.5, 0 otherwise)
+        A, _ = self.forward_prop(X)
         predictions = np.where(A >= 0.5, 1, 0)
-
-        # Calculate the cost
         cost = self.cost(Y, A)
         return predictions, cost
