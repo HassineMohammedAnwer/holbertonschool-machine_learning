@@ -94,7 +94,7 @@ class DeepNeuralNetwork:
         A_L = cache['A' + str(L)]
         dZ_L = A_L - Y
         # Backpropagation through the layers, Loop backwards through layers
-        for l in reversed(range(1, L)):
+        for l in reversed(range(1, L + 1)):
             A_prev = cache['A' + str(l - 1)]
             # Compute gradients of weights, biases, and previous activation
             dW = (1 / m) * np.dot(dZ_L, A_prev.T)
