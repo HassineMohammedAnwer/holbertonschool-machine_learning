@@ -94,15 +94,15 @@ class DeepNeuralNetwork:
         A_L = cache['A' + str(L)]
         dZ_L = A_L - Y
         # Backpropagation through the layers, Loop backwards through layers
-        for l in reversed(range(1, L + 1)):
-            A_prev = cache['A' + str(l - 1)]
+        for lay in reversed(range(1, L + 1)):
+            A_prev = cache['A' + str(lay - 1)]
             # Compute gradients of weights, biases, and previous activation
-            dW = (1 / m) * np.dot(dZ_L, A_prev.T)
+            dW = (1 / m) * np.matmul(dZ_L, A_prev.T)
             db = (1 / m) * np.sum(dZ_L, axis=1, keepdims=True)
 
-            self.weights['W' + str(l)] -= alpha * dW
-            self.weights['b' + str(l)] -= alpha * db
-            if l > 1:
-                # if hidden layers, calculate dZ of the previous layer
-                W_curr = self.weights['W' + str(l)]
-                dZ_L = np.dot(W_curr.T, dZ_L) * (A_prev * (1 - A_prev))  # Sigmoid derivative
+            W_curr = self.weights['W' + str(lay)]
+            # Sigmoid drv1
+            dZ_L = np.matmul(W_curr.T, dZ_L) * (A_prev * (1 - A_prev))
+
+            self.weights['W' + str(lay)] -= alpha * dW
+            self.weights['b' + str(lay)] -= alpha * db
