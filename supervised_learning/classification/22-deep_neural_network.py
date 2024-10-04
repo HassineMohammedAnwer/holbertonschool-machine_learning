@@ -114,10 +114,12 @@ class DeepNeuralNetwork:
 
         A, cost = self.evaluate(X, Y)
         return A, cost"""
-        while(iterations):
+        i = 0
+        while(i < iterations):
             # run forward propagation
             self.forward_prop(X)
             # run gradient descent
             self.gradient_descent(Y, self.cache, alpha)
+            i += 1
 
         return self.evaluate(X, Y)
