@@ -15,16 +15,16 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha,
     classes = Y_train.shape[1]
     x, y = create_placeholders(nx, classes)
     y_pred = forward_prop(x, layer_sizes, activations)
-    accuracy = calculate_accuracy(y, y_pred)
     loss = calculate_loss(y, y_pred)
+    accuracy = calculate_accuracy(y, y_pred)
     train_op = create_train_op(loss, alpha)
 
     # add tensors and operations to collections for later retrieval
     tf.add_to_collection('x', x)
     tf.add_to_collection('y', y)
     tf.add_to_collection('y_pred', y_pred)
-    tf.add_to_collection('accuracy', accuracy)
     tf.add_to_collection('loss', loss)
+    tf.add_to_collection('accuracy', accuracy)
     tf.add_to_collection('train_op', train_op)
 
     saver = tf.train.Saver()
@@ -38,7 +38,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha,
 
             valid_loss, valid_acc = sess.run(
                 [loss, accuracy], feed_dict={x: X_valid, y: Y_valid})
-            if i == 0 or i % 100 == 0:
+            if i == iterations or i % 100 == 0:
                 print(f"After {i} iterations:")
                 print(f"\tTraining Cost: {train_loss}")
                 print(f"\tTraining Accuracy: {train_acc}")
