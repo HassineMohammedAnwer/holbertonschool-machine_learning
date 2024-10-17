@@ -20,7 +20,6 @@ class MultiNormal:
         """Probability Density Function
         f(x) = (1 / (sqrt((2 * π)^d * det(Σ)))) *
               exp(-0.5 * (x - μ)^T * Σ^(-1) * (x - μ))
-        
         d is the number of dimensions (i.e., the size of the mean vector μ)
         Σ is the covariance matrix of the distribution
         det(Σ) determinant of the covariance matrix
