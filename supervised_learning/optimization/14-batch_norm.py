@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """14. Batch Normalization Upgraded"""
 import tensorflow as tf
-import numpy as np
 
 
 def create_batch_norm_layer(prev, n, activation):
