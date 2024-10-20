@@ -28,22 +28,20 @@ def train_model(network, data, labels, batch_size, epochs,
     alpha is the initial learning rate
     decay_rate is the decay rate
     Returns: the History object generated after training the model"""
-    callbacks = None
-    if validation_data:
-        callbacks = []
-        if early_stopping is True:
-            callback_early_stop = K.callbacks.EarlyStopping(
-                monitor='val_loss',
-                patience=patience,
-                verbose=verbose,
-            )
-            callbacks.append(callback_early_stop)
-        if learning_rate_decay is True:
-            def lr_decay(alpha, decay_rate, epochs):
-                return alpha / (1 + decay_rate * epochs)
-            callback_l_r_d = K.callbacks.LearningRateScheduler(
-                schedule = lr_decay, verbose=1)
-            callbacks.append(callback_l_r_d)
+    callbacks = []
+    if early_stopping is True and validation_data is not None:
+        callback_early_stop = K.callbacks.EarlyStopping(
+            monitor='val_loss',
+            patience=patience,
+            verbose=verbose,
+        )
+        callbacks.append(callback_early_stop)
+    if learning_rate_decay and validation_data:
+        def lr_decay(alpha, decay_rate, epochs):
+            return alpha / (1 + decay_rate * epochs)
+        callback_l_r_d = K.callbacks.LearningRateScheduler(
+            schedule = lr_decay, verbose=1)
+        callbacks.append(callback_l_r_d)
 
     History = network.fit(
         data,
