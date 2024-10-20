@@ -24,7 +24,7 @@ def train_model(network, data, labels, batch_size, epochs,
       early stopping should be based on validation loss
     patience is the patience used for early stopping
     Returns: the History object generated after training the model"""
-    callback = None
+    callbacks = None
     if validation_data:
         callbacks = []
         if early_stopping == True:
@@ -35,7 +35,7 @@ def train_model(network, data, labels, batch_size, epochs,
             )
         callbacks.append(callback_early_stop)
         if learning_rate_decay == True:
-            l_r_d = alpha / (1 + decay_rate * epochs)
+            l_r_d = alpha / (1 + (decay_rate * epochs))
             callback_l_r_d = K.callbacks.LearningRateScheduler(
                 schedule = l_r_d, verbose=1)
             callbacks.append(callback_l_r_d)
@@ -45,7 +45,7 @@ def train_model(network, data, labels, batch_size, epochs,
         labels,
         batch_size=batch_size,
         verbose=verbose,
-        callbacks=callback,
+        callbacks=callbacks,
         validation_data=validation_data,
         epochs=epochs,
         shuffle=shuffle)
