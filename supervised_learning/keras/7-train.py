@@ -5,6 +5,7 @@ import tensorflow.keras as K
 
 def train_model(network, data, labels, batch_size, epochs,
                 validation_data=None, early_stopping=False, patience=0,
+                learning_rate_decay=False, alpha=0.1, decay_rate=1,
                 verbose=True, shuffle=False):
     """
     trains model using mini-bch gradient descent and analyzes validation data
@@ -23,15 +24,22 @@ def train_model(network, data, labels, batch_size, epochs,
       early stopping should be based on validation loss
     patience is the patience used for early stopping
     Returns: the History object generated after training the model"""
+    callback = None
     if validation_data:
-        callback = K.callbacks.EarlyStopping(
-            monitor='val_loss',
-            patience=patience,
-            verbose=verbose,
-        )
-    else:
-        callback = None
-    
+        callbacks = []
+        if early_stopping == True:
+            callback_early_stop = K.callbacks.EarlyStopping(
+                monitor='val_loss',
+                patience=patience,
+                verbose=verbose,
+            )
+        callbacks.append(callback_early_stop)
+        if learning_rate_decay == True:
+            l_r_d = alpha / (1 + decay_rate * epochs)
+            callback_l_r_d = K.callbacks.LearningRateScheduler(
+                schedule = l_r_d, verbose=0)
+            callbacks.append(callback_l_r_d)
+
     History = network.fit(
         data,
         labels,

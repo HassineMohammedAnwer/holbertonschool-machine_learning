@@ -41,4 +41,3 @@ def train_model(network, data, labels, batch_size, epochs,
         epochs=epochs,
         shuffle=shuffle)
     return History
-
