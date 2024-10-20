@@ -15,7 +15,7 @@ def save_config(network, filename):
 
 def load_config(filename):
     """ loads a model with a specific configuration:
-    filename path of the file containing the model’s configuration in JSON format
+    filename path of file containing model’s configuration in JSON format
     Returns: the loaded model"""
     with open(filename, "r") as f:
         network_json = f.read()
