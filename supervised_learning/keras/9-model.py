@@ -10,6 +10,7 @@ def save_model(network, filename):
     Returns: None"""
     network.save(filename)
 
+
 def load_model(filename):
     """loads an entire model:
     filename path of the file that the model should be loaded from
