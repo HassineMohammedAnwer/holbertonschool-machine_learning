@@ -37,7 +37,7 @@ def train_model(network, data, labels, batch_size, epochs,
                 patience=patience,
                 verbose=verbose,
             )
-        callbacks.append(callback_early_stop)
+            callbacks.append(callback_early_stop)
         if learning_rate_decay is True:
             def lr_decay(alpha, decay_rate, epochs):
                 return alpha / (1 + decay_rate * epochs)
