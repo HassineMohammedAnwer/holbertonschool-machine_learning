@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""6. Early Stopping"""
+"""7. Learning Rate Decay"""
 import tensorflow.keras as K
 
 
@@ -9,7 +9,8 @@ def train_model(network, data, labels, batch_size, epochs,
                 verbose=True, shuffle=False):
     """
     trains model using mini-bch gradient descent and analyzes validation data
-      also trains the model using early stopping
+      also trains the model using early stopping also train the model with
+      learning rate decay
     network is the model to train
     data is a numpy.ndarray of shape (m, nx) containing the input data
     labels one-hot numpy.ndarray of shape(m, classes)containing labels of data
@@ -23,6 +24,9 @@ def train_model(network, data, labels, batch_size, epochs,
       early stopping should only be performed if validation_data exists
       early stopping should be based on validation loss
     patience is the patience used for early stopping
+    learning_rate_decay boolean indicates whether to use learning rate decay
+    alpha is the initial learning rate
+    decay_rate is the decay rate
     Returns: the History object generated after training the model"""
     callbacks = None
     if validation_data:
@@ -35,7 +39,7 @@ def train_model(network, data, labels, batch_size, epochs,
             )
         callbacks.append(callback_early_stop)
         if learning_rate_decay is True:
-            def lr_decay(epochs):
+            def lr_decay(alpha, decay_rate, epochs):
                 return alpha / (1 + decay_rate * epochs)
             callback_l_r_d = K.callbacks.LearningRateScheduler(
                 schedule = lr_decay, verbose=1)
