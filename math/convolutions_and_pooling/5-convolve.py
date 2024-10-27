@@ -27,7 +27,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
     Only allowed to use three for loops;
     Returns: a numpy.ndarray containing the convolved images"""
     m, h, w, c = images.shape
-    kh, kw, c, nc = kernels.shape
+    kh, kw, _, nc = kernels.shape
     sh, sw = stride
     if padding == 'same':
         output_h = h
@@ -56,9 +56,9 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
 
     output = np.zeros((m, output_h, output_w, c))
 
-    for k in range(nc):
-        for i in range(output_h):
-            for j in range(output_w):
+    for i in range(output_h):
+        for j in range(output_w):
+            for k in range(nc):
                 output[:, i, j, k] = np.sum(
                     padded_images[:, i * sh:i * sh + kh, j * sw:j * sw + kw, :]
                     * kernels[:, :, :, k], axis=(1, 2, 3))
