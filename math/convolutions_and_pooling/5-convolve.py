@@ -54,7 +54,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
                            mode='constant',
                            constant_values=0)
 
-    output = np.zeros((m, output_h, output_w, c))
+    output = np.zeros((m, output_h, output_w, nc))
 
     for i in range(output_h):
         for j in range(output_w):
