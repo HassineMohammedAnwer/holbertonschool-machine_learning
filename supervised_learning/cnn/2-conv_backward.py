@@ -41,10 +41,9 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                                       (0, 0)),
                            mode='constant',
                            constant_values=0)
-        _, h_prev, w_prev, c_prev = A_prev.shape
     else:
         ph, pw = 0, 0
-    dA_prev = np.zeros((m, h_prev, w_prev, c_prev))
+    dA_prev = np.zeros((A_prev.shape))
     dW = np.zeros((kh, kw, c_prev, c_new))
     db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
     for e in range(m):
