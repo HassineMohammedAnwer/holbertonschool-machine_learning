@@ -31,8 +31,8 @@ def conv_forward(A_prev, W, b, activation,
     if padding == 'same':
         output_h = h_prev
         output_w = w_prev
-        p_top = p_bot = int(((h_prev - 1) * sh + kh - h_prev) / 2) + 1
-        p_left = p_right = int(((w_prev - 1) * sw + kw - w_prev) / 2) + 1
+        p_top = p_bot = int(((h_prev - 1) * sh + kh - h_prev) / 2)
+        p_left = p_right = int(((w_prev - 1) * sw + kw - w_prev) / 2)
     elif padding == 'valid':
         output_h = (h_prev - kh) // sh + 1
         output_w = (w_prev - kw) // sw + 1
