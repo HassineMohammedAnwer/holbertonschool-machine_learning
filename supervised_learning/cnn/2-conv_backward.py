@@ -11,20 +11,20 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     h_new is the height of the output
     w_new is the width of the output
     c_new is the number of channels in the output
-    A_prev is a numpy.ndarray of shape (m, h_prev, w_prev, c_prev): output of previous layer
+    A_prev numpy.ndarray (m, h_prev, w_prev, c_prev): output of previous layer
     h_prev is the height of the previous layer
     w_prev is the width of the previous layer
     c_prev is the number of channels in the previous layer
-    W is a numpy.ndarray (kh, kw, c_prev, c_new) containing kernels for convolution
+    W numpy.ndarray (kh, kw, c_prev, c_new) : kernels for convolution
     kh is the filter height
     kw is the filter width
     b is a numpy.ndarray (1, 1, 1, c_new): biases applied to the convolution
-    padding is a string that is either same or valid, indicating the type of padding used
+    padding string that's either same or valid, indicating type of padding used
     stride is a tuple of (sh, sw) containing the strides for the convolution
     sh is the stride for the height
     sw is the stride for the width
     you may import numpy as np
-    Returns: the partial derivatives with respect to the previous layer (dA_prev),
+    Returns: partial derivatives with respect to previous layer (dA_prev),
     __the kernels (dW), and the biases (db), respectively
     """
     m, h_new, w_new, c_new = dZ.shape
@@ -44,13 +44,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     else:
         ph, pw = 0, 0
     dA_prev = np.zeros((A_prev.shape))
-    dA_prev = np.pad(dA_prev,
-                    pad_width=((0, 0),
-                               (ph, ph),
-                               (pw, pw),
-                               (0, 0)),
-                    mode='constant',
-                    constant_values=0)
     dW = np.zeros((kh, kw, c_prev, c_new))
     db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
     for e in range(m):
@@ -63,7 +56,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     dW[:, :, :, k] += (A_prev[e, i * sh:i * sh + kh,
                                                j * sw:j * sw + kw, :] *
                                        dZ[e, i, j, k])
-    dA_prev = dA_prev[:, ph:-ph, pw:-pw, :]
-    # dA_prev = dA_prev[:, ph:h_prev - ph, pw:w_prev - pw, :]
 
-    return dA_prev, dW, db
+    dA = dA_prev[:, ph:-ph, pw:-pw, :]
+
+    return dA, dW, db
