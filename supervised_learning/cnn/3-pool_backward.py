@@ -25,7 +25,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     Returns: partial derivatives with respect to the previous layer (dA_prev)
     """
     m, h_new, w_new, c_new = dA.shape
-    _, h_prev, w_prev, c_prev = A_prev.shape
+    _, h_prev, w_prev, c = A_prev.shape
     kh, kw, = kernel_shape
     sh, sw = stride
     dA_prev = np.zeros((A_prev.shape))
@@ -35,7 +35,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                 for j in range(w_new):
                     for k in range(c_new):
                         average_dA = dA[e, i, j, k] / kh / kw
-                        dA_prev[m, i * sh:(i * sh + kh), j * sw:(j * sw + kw),
+                        dA_prev[e, i * sh:(i * sh + kh), j * sw:(j * sw + kw),
                                 k] += np.ones((kh, kw))*average_dA
     elif mode == 'max':
         for e in range(m):
@@ -45,7 +45,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                         a_prev_slice = A_prev[e, i * sh:i * sh + kh,
                                               j * sw:j * sw + kw, k]
                         mask = (a_prev_slice == np.max(a_prev_slice))
-                        dA_prev[e, i * sh:(i * sh + kh), j * sh:(j * sh + kw),
+                        dA_prev[e, i * sh:(i * sh + kh), j * sw:(j * sw + kw),
                                 k] += mask * dA[e, i, j, k]
 
     return dA_prev
