@@ -50,7 +50,7 @@ def lenet5(x, y):
                             activation='relu',
                             kernel_initializer=initializer)(f_c1)
     predicted_output = tf.layers.Dense(10,
-                             activation=tf.nn.softmax,
+                             activation=None,
                              kernel_initializer=initializer)(f_c2)
     A = tf.nn.softmax(predicted_output)
 
