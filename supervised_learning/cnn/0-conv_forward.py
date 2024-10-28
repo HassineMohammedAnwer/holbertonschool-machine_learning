@@ -16,9 +16,9 @@ def conv_forward(A_prev, W, b, activation,
     kw is the filter width
     c_prev is the number of channels in the previous layer
     c_new is the number of channels in the output
-    bnumpy.ndarray(1, 1, 1, c_new) containing the biases applied to the convolution
+    b numpy.ndarray(1, 1, 1, c_new) containing biases applied to convolution
     activation is an activation function applied to the convolution
-    padding is a string that is either same or valid, indicating the type of padding used
+    padding string that's either same or valid, indicating type of padding used
     stride is a tuple of (sh, sw) containing the strides for the convolution
     sh is the stride for the height
     sw is the stride for the width
