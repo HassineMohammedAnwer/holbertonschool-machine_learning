@@ -53,7 +53,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     dA_prev[e, i * sh:i * sh + kh,
                             j * sw:j * sw + kw, :] += (W[:, :, :, k] *
                                                        dZ[e, i, j, k])
-                    dW[:, :, :, k] += (dA_prev[e, i * sh:i * sh + kh,
+                    dW[:, :, :, k] += (A_prev[e, i * sh:i * sh + kh,
                                                j * sw:j * sw + kw, :] *
                                        dZ[e, i, j, k])
     dA_prev = dA_prev[:, ph:h_prev - ph, pw:w_prev - pw, :]
