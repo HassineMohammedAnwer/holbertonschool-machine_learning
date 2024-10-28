@@ -51,4 +51,4 @@ def conv_forward(A_prev, W, b, activation,
                     padded_images[:, i * sh:i * sh + kh, j * sw:j * sw + kw, :]
                     * W[:, :, :, k], axis=(1, 2, 3))
     Z = A + b
-    return Z
+    return activation(Z)
