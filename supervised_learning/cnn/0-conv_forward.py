@@ -31,12 +31,12 @@ def conv_forward(A_prev, W, b, activation,
     if padding == 'same':
         # output_h = (h_prev - kh) // sh + 1
         # output_w = (w_prev - kw) // sw + 1
-        # p_top = p_bot = int(((h_prev - 1) * sh + kh - h_prev) / 2)
-        # p_left = p_right = int(((w_prev - 1) * sw + kw - w_prev) / 2)
+        p_top = p_bot = int(((h_prev - 1) * sh + kh - h_prev) / 2)
+        p_left = p_right = int(((w_prev - 1) * sw + kw - w_prev) / 2)
 
     elif padding == 'valid':
-        output_h = (h_prev - kh) // sh + 1
-        output_w = (w_prev - kw) // sw + 1
+        # output_h = (h_prev - kh) // sh + 1
+        # output_w = (w_prev - kw) // sw + 1
         p_top, p_bot, p_left, p_right = (0, 0, 0, 0)
     padded_images = np.pad(A_prev,
                            pad_width=((0, 0),
