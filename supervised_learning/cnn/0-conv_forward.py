@@ -33,7 +33,7 @@ def conv_forward(A_prev, W, b, activation,
         pw = int(((w_prev - 1) * sw + kw - w_prev) / 2)
 
     elif padding == 'valid':
-        ph, pw = (0, 0)
+        ph, pw = 0, 0
     padded_images = np.pad(A_prev,
                            pad_width=((0, 0),
                                       (ph, ph),
