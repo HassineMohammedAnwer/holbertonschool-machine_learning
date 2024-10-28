@@ -29,8 +29,8 @@ def conv_forward(A_prev, W, b, activation,
     kh, kw, c_prev, c_new = W.shape
     sh, sw = stride
     if padding == 'same':
-        ph = int(((h_prev - 1) * sh + kh - h_prev) / 2)
-        pw = int(((w_prev - 1) * sw + kw - w_prev) / 2)
+        ph = int(((h_prev - 1) * sh + kh - h_prev) / 2 + 1)
+        pw = int(((w_prev - 1) * sw + kw - w_prev) / 2 + 1)
 
     elif padding == 'valid':
         ph, pw = (0, 0)
