@@ -43,7 +43,8 @@ def lenet5(x):
         K.layers.Flatten(),
         K.layers.Dense(120, activation='relu', kernel_initializer=initializer),
         K.layers.Dense(84, activation='relu', kernel_initializer=initializer),
-        K.layers.Dense(10, activation='softmax', kernel_initializer=initializer)
+        K.layers.Dense(10, activation='softmax',
+                       kernel_initializer=initializer)
     ])
     model.compile(loss='categorical_crossentropy',
                   optimizer=K.optimizers.Adam(),
