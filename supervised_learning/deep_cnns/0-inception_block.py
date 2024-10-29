@@ -4,16 +4,16 @@ from tensorflow import keras as K
 
 
 def inception_block(A_prev, filters):
-    """builds an inception block 
+    """builds an inception block
     A_prev is the output from the previous layer
-    filters is a tuple or list containing F1, F3R, F3,F5R, F5, FPP, respectively:
+    filters: tuple or list containing F1, F3R, F3,F5R, F5, FPP respectively:
     __F1 is the number of filters in the 1x1 convolution
-    __F3R is the number of filters in the 1x1 convolution before the 3x3 convolution
+    __F3R: number of filters in the 1x1 convolution before 3x3 convolution
     ___F3 is the number of filters in the 3x3 convolution
-    __F5R is the number of filters in the 1x1 convolution before the 5x5 convolution
+    __F5R: number of filters in the 1x1 convolution before 5x5 convolution
     __F5 is the number of filters in the 5x5 convolution
     __FPP is the number of filters in the 1x1 convolution after the max pooling
-    All convolutions inside the inception block should use a rectified linear activation(ReLU)
+    All convolutions inside inception block should use (ReLU)
     Returns: the concatenated output of the inception block"""
     F1, F3R, F3, F5R, F5, FPP = filters
 
