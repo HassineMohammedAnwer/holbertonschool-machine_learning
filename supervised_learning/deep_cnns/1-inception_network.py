@@ -48,29 +48,34 @@ def inception_network():
         strides=2,
         padding='same'
     )(concatenate_1)
-    concatenate_2 = inception_block(max_pooling2d_2, [192, 96, 208, 16, 48, 64])
+    concatenate_2 = inception_block(max_pooling2d_2,
+                                    [192, 96, 208, 16, 48, 64])
     # lkn
-    concatenate_3  = inception_block(concatenate_2, [160, 112, 224, 24, 64, 64])
+    concatenate_3 = inception_block(concatenate_2,
+                                    [160, 112, 224, 24, 64, 64])
     # avg prev from here
     concatenate_4 = inception_block(concatenate_3, [128, 128, 256, 24, 64, 64])
     concatenate_5 = inception_block(concatenate_4, [112, 144, 288, 32, 64, 64])
     # lkn
-    concatenate_6 = inception_block(concatenate_5, [256, 160, 320, 32, 128, 128])
+    concatenate_6 = inception_block(concatenate_5,
+                                    [256, 160, 320, 32, 128, 128])
     # avg prev from here
     max_pooling2d_10 = K.layers.MaxPooling2D(
         pool_size=3,
         strides=2,
         padding='same'
     )(concatenate_6)
-    concatenate_7 = inception_block(max_pooling2d_10, [256, 160, 320, 32, 128, 128])
-    concatenate_8 = inception_block(concatenate_7, [384, 192, 384, 48, 128, 128])
+    concatenate_7 = inception_block(max_pooling2d_10,
+                                    [256, 160, 320, 32, 128, 128])
+    concatenate_8 = inception_block(concatenate_7,
+                                    [384, 192, 384, 48, 128, 128])
     average_pooling2d = K.layers.AveragePooling2D(
         pool_size=7,
         strides=1,
         padding='valid'
     )(concatenate_8)
     dropout = K.layers.Dropout(rate=0.4)(average_pooling2d)
-    dense =  K.layers.Dense(
+    dense = K.layers.Dense(
         units=1000,
         activation='softmax',
         )(dropout)
