@@ -74,6 +74,6 @@ def inception_network():
         units=1000,
         activation='softmax',
         )(dropout)
-    model = K.models.Model(inputs=X, outputs=dense)
+    model = K.models.Model(inputs=input_1, outputs=dense)
 
     return model
