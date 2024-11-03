@@ -24,7 +24,7 @@ def resnet50():
         strides=2,
         padding='same'
     )(activation)
-    activation_3 = projection_block(max_pooling2d, [64, 64, 256])
+    activation_3 = projection_block(max_pooling2d, [64, 64, 256], s=1)
     activation_6 = identity_block(activation_3, [64, 64, 256])
     activation_9 = identity_block(activation_6, [64, 64, 256])
     activation_12 = projection_block(activation_9, [128, 128, 512], s=2)
