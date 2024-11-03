@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+"""2. Identity Block"""
+from tensorflow import keras as K
+
+
+def identity_block(A_prev, filters):
+    """builds an identity block
+    A_prev is the output from the previous layer
+    filters is a tuple or list containing F11, F3, F12, respectively:
+    F11 is the number of filters in the first 1x1 convolution
+    F3 is the number of filters in the 3x3 convolution
+    F12 is the number of filters in the second 1x1 convolution
+    All convolutions inside the block should be followed by batch normalization
+    along channels axis and rectified linear activation (ReLU), respectively.
+    All weights should use he normal initialization
+    The seed for the he_normal initializer should be set to zero
+    Returns: the activated output of the identity block"""
+    initializer = K.initializers.he_normal(seed=0)
+    F11, F3, F12 = filters
+    conv2d = K.layers.Conv2D(
+        filters=F11,
+        kernel_size=1,
+        padding='same',
+        kernel_initializer=initializer,
+        activation='relu'
+    )(A_prev)
+    batch_normalization = K.layers.BatchNormalization(axis=3)(conv2d)
+    activation = K.layers.Activation('relu')(batch_normalization)
+    conv2d_1 = K.layers.Conv2D(
+        filters=F3,
+        kernel_size=3,
+        padding='same',
+        kernel_initializer=initializer,
+        activation='relu'
+    )(activation)
+    batch_normalization_1 = K.layers.BatchNormalization(axis=3)(conv2d_1)
+    activation_1 = K.layers.Activation('relu')(batch_normalization_1)
+    conv2d_2 = K.layers.Conv2D(
+        filters=F12,
+        kernel_size=1,
+        padding='same',
+        kernel_initializer=initializer,
+        activation='relu'
+    )(activation_1)
+    batch_normalization_2 = K.layers.BatchNormalization(axis=3)(conv2d_2)
+    add = K.layers.Add()([batch_normalization_2, A_prev])
+    activation_2 = K.layers.Activation('relu')(add)
+    return activation_2
