@@ -12,7 +12,7 @@ def projection_block(A_prev, filters, s=2):
         filters=F11,
         kernel_size=1,
         padding='same',
-        strides=2,
+        strides=s,
         kernel_initializer=initializer
     )(A_prev)
     batch_normalization = K.layers.BatchNormalization(axis=3)(conv2d)
@@ -35,7 +35,7 @@ def projection_block(A_prev, filters, s=2):
         filters=F12,
         kernel_size=1,
         padding='same',
-        strides=2,
+        strides=s,
         kernel_initializer=initializer
     )(A_prev)
     batch_normalization_2 = K.layers.BatchNormalization(axis=3)(conv2d_2)
