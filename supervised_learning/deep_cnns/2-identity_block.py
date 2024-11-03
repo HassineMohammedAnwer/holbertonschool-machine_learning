@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """2. Identity Block"""
+
 from tensorflow import keras as K
 
 
