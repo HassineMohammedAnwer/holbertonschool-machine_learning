@@ -20,7 +20,12 @@ x_train, y_train = preprocess_data(x_train, y_train)
 x_test, y_test = preprocess_data(x_test, y_test)
 base_model = K.applications.DenseNet121(weights='imagenet', include_top=False,
                                      input_shape=(224, 224, 3))
-base_model.trainable = False
+base_model.trainable = True
+
+# Only unfreezing the last 122 layers
+for layer in base_model.layers[:-122]:
+    layer.trainable = False
+
 # Define the model structure
 inputs = K.Input(shape=(32, 32, 3))
 input = K.layers.Lambda(lambda image: tf.image.resize(image, (224, 224)))(inputs)
@@ -34,7 +39,11 @@ x = K.layers.Dropout(0.3)(x)
 x = K.layers.BatchNormalization()(x)
 outputs = K.layers.Dense(10, activation='softmax')(x)
 model = K.Model(inputs, outputs)
-model.compile(optimizer=K.optimizers.Adam(),
-              loss='categorical_crossentropy', metrics=['accuracy'])
-model.fit(x_train, y_train, epochs=3, batch_size=500, verbose=1, validation_data=(x_test, y_test))
-model.save('tmp_cifar10.h5')
+
+model.compile(optimizer=K.optimizers.Adam(learning_rate=1e-5),
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train, epochs=5, batch_size=128, verbose=1, validation_data=(x_test, y_test))
+
+model.save('fine_tuned_cifar10.h5')
