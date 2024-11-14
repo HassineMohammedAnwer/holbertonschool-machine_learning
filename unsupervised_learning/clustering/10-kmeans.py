@@ -7,7 +7,6 @@ def kmeans(X, k):
     """ performs K-means on a dataset:
     X is a numpy.ndarray of shape (n, d) containing the dataset
     k is the number of clusters
-    The only import you are allowed to use is import sklearn.cluster
     Returns: C, clss
     C is a numpy.ndarray of shape (k, d) containing the centroid
     __means for each cluster
