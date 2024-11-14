@@ -58,4 +58,3 @@ class Yolo:
             box_class_probs: a list of numpy.ndarrays of shape (grid_height,
             grid_width, anchor_boxes, classes) containing the box’s class
             __probabilities for each output, respectively"""
-            
