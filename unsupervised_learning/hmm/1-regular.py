@@ -13,7 +13,8 @@ def regular(P):
     Returns: a numpy.ndarray of shape (1, n) containing the steady
     __state probabilities, or None on failure"""
 
-    if not isinstance(P, np.ndarray) or P.shape[0] != P.shape[1] or P.ndim != 2:
+    if not isinstance(P,
+                      np.ndarray) or P.shape[0] != P.shape[1] or P.ndim != 2:
         return None
 
     if not np.allclose(P.sum(axis=1), 1):
