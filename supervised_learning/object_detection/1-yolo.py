@@ -32,6 +32,7 @@ class Yolo:
         self.class_t = class_t
         self.nms_t = nms_t
         self.anchors = anchors
+
         def process_outputs(self, outputs, image_size):
             """outputs is a list of numpy.ndarrays containing the predictions
             __from the Darknet model for a single image:
