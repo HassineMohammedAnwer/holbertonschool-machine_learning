@@ -76,14 +76,12 @@ class Yolo:
                                  np.arange(grid_height))
             cx = cx[..., np.newaxis]
             cy = cy[..., np.newaxis]
-            # anchor width and height
             p_w = self.anchors[i_cell, :, 0]
             p_h = self.anchors[i_cell, :, 1]
             bx = (1.0 / (1.0 + np.exp(-t_x)) + cx) / grid_width
             by = (1.0 / (1.0 + np.exp(-t_y)) + cy) / grid_height
             bw = p_w * np.exp(t_w)
             bh = p_h * np.exp(t_h)
-            # Convert to corners (x1, y1, x2, y2)
             x1 = (bx - bw / 2) * image_width
             y1 = (by - bh / 2) * image_height
             x2 = (bx + bw / 2) * image_width
