@@ -79,8 +79,8 @@ class Yolo:
             p_h = self.anchors[i_cell, :, 1]
             bx = (1.0 / (1.0 + np.exp(-t_x)) + cx) / grid_width
             by = (1.0 / (1.0 + np.exp(-t_y)) + cy) / grid_height
-            bw = p_w * np.exp(t_w)
-            bh = p_h * np.exp(t_h)
+            bw = p_w * np.exp(t_w) / image_width
+            bh = p_h * np.exp(t_h) / image_height
             x1 = (bx - bw / 2) * image_width
             y1 = (by - bh / 2) * image_height
             x2 = (bw / 2 + bx) * image_width
