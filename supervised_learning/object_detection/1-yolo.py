@@ -64,7 +64,6 @@ class Yolo:
         boxes = []
         box_confidences = []
         box_class_probs = []
-        
         for i_cell, output in enumerate(outputs):
             grid_height, grid_width, anchor_boxes, _ = output.shape
             t_x = output[:, :, :, 0]
@@ -84,8 +83,8 @@ class Yolo:
             bh = p_h * np.exp(t_h)
             x1 = (bx - bw / 2) * image_width
             y1 = (by - bh / 2) * image_height
-            x2 = (bx + bw / 2) * image_width
-            y2 = (by + bh / 2) * image_height
+            x2 = (bw / 2 + bx) * image_width
+            y2 = (bh / 2 + by) * image_height
             box[:, :, :, 0] = x1
             box[:, :, :, 1] = y1
             box[:, :, :, 2] = x2
@@ -95,9 +94,7 @@ class Yolo:
             Objectness = 1 / (1 + np.exp(-Obj))
             Class_Confidences = output[:, :, :, 5:]
             sigmoid_class_probs = 1 / (1 + np.exp(-Class_Confidences))
-
             box_confidences.append(Objectness)
             box_class_probs.append(sigmoid_class_probs)
-
         return boxes, box_confidences, box_class_probs
 
