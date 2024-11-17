@@ -82,9 +82,9 @@ class Yolo:
             bx /= grid_width
             by /= grid_height
             bw = p_w * np.exp(t_w)
-            bw /= self.model.input.shape[1].value
+            bw /= image_width
             bh = p_h * np.exp(t_h)
-            bh /= self.model.input.shape[2].value
+            bh /= image_height
             x1 = (bx - bw / 2) * image_width
             y1 = (by - bh / 2) * image_height
             x2 = (bw / 2 + bx) * image_width
