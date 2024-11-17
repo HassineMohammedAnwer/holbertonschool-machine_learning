@@ -73,8 +73,8 @@ class Yolo:
             box = np.zeros((grid_height, grid_width, anchor_boxes, 4))
             cx, cy = np.meshgrid(np.arange(grid_width),
                                  np.arange(grid_height))
-            cx = cx[..., np.newaxis]
-            cy = cy[..., np.newaxis]
+            cx = np.expand_dims(cx, axis=-1)
+            cy = np.expand_dims(cy, axis=-1)
             p_w = self.anchors[i_cell, :, 0]
             p_h = self.anchors[i_cell, :, 1]
             bx = (1.0 / (1.0 + np.exp(-t_x))) + cx
