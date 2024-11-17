@@ -66,7 +66,7 @@ class Yolo:
         box_class_probs = []
         
         for i_cell, output in enumerate(outputs):
-            grid_height, grid_width, anchor_boxes, _ = outputs[output]
+            grid_height, grid_width, anchor_boxes, _ = output.shape
             t_x = output[:, :, :, 0]
             t_y = output[:, :, :, 1]
             t_w = output[:, :, :, 2]
