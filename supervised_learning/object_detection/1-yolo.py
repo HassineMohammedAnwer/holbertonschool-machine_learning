@@ -77,8 +77,10 @@ class Yolo:
             cy = cy[..., np.newaxis]
             p_w = self.anchors[i_cell, :, 0]
             p_h = self.anchors[i_cell, :, 1]
-            bx = (1.0 / (1.0 + np.exp(-t_x)) + cx) / grid_width
-            by = (1.0 / (1.0 + np.exp(-t_y)) + cy) / grid_height
+            bx = (1.0 / (1.0 + np.exp(-t_x))) + cx
+            by = (1.0 / (1.0 + np.exp(-t_y))) + cy
+            bx /= grid_width
+            by /= grid_height
             bw = p_w * np.exp(t_w) / image_width
             bh = p_h * np.exp(t_h) / image_height
             x1 = (bx - bw / 2) * image_width
@@ -97,4 +99,3 @@ class Yolo:
             box_confidences.append(Objectness)
             box_class_probs.append(sigmoid_class_probs)
         return boxes, box_confidences, box_class_probs
-
