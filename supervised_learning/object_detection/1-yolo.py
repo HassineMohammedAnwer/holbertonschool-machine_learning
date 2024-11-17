@@ -65,7 +65,7 @@ class Yolo:
         box_confidences = []
         box_class_probs = []
         
-        for i_cell, output in outputs:
+        for i_cell, output in enumerate(outputs):
             grid_height, grid_width, anchor_boxes, _ = outputs[output]
             t_x = output[:, :, :, 0]
             t_y = output[:, :, :, 1]
