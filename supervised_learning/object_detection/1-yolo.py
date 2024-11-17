@@ -72,7 +72,7 @@ class Yolo:
             t_w = output[:, :, :, 2]
             t_h = output[:, :, :, 3]
             box = np.zeros((grid_height, grid_width, anchor_boxes, 4))
-            cy, cx = np.meshgrid(np.arange(grid_width),
+            cx, cy = np.meshgrid(np.arange(grid_width),
                                  np.arange(grid_height))
             cx = cx[..., np.newaxis]
             cy = cy[..., np.newaxis]
