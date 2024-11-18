@@ -10,6 +10,6 @@ def from_numpy(array):
     __and capitalized. There will not be more than 26 columns.
     Returns: the newly created pd.DataFrame"""
     col = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    num_col = array.shape[1]
+    num_col = array.size
     df = pd.DataFrame(array, columns=col[:num_col])
     return df
