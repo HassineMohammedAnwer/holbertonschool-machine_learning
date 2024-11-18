@@ -2,6 +2,8 @@
 """0. Initialize Yolo"""
 import numpy as np
 import tensorflow as tf
+import cv2
+import os
 
 
 class Yolo:
@@ -132,3 +134,19 @@ class Yolo:
         predicted_box_classes = []
         predicted_box_scores = []
         return box_predictions, predicted_box_classes, predicted_box_scores
+
+    def load_images(folder_path):
+        """folder_path: a string representing the path to the folder holding
+        __all the images to load
+        Returns a tuple of (images, image_paths):
+        images: a list of images as numpy.ndarrays
+        image_paths: a list of paths to the individual images in images"""
+        images = []
+        image_paths = []
+        for filename in os.listdir(folder_path):
+            images_path = os.path.join(folder_path, filename)
+            img = cv2.imread(images_path)
+            if img is not None:
+                images.append(img)
+                image_paths.append(images_path)
+        return images, image_paths
