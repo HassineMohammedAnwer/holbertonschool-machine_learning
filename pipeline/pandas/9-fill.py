@@ -13,6 +13,8 @@ def fill(df):
     """
     df.drop(columns=['Weighted_Price'], inplace=True)
     df['Close'].fillna(method='ffill', inplace=True)
-    df[['High', 'Low', 'Open']].fillna(df['Close'], inplace=True)
-    df[['Volume_(BTC)', 'Volume_(Currency)']].fillna(0, inplace=True)
+    df[['High', 'Low', 'Open']] = (
+        df[['High', 'Low', 'Open']].fillna(df['Close']))
+    df[['Volume_(BTC)', 'Volume_(Currency)']] = (
+        df[['Volume_(BTC)', 'Volume_(Currency)']].fillna(0))
     return df
