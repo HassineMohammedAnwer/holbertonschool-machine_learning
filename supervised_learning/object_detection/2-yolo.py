@@ -107,9 +107,10 @@ class Yolo:
         """filtering the bounding boxes based on confidence scores and class
         probabilities, and returning the relevant predictions.
         score=confidence × max(class_probabilities)"""
-        filtered_boxes = []
-        box_classes = []
-        box_scores = []
+         # initialize with 4 col to be wompatible with mask
+        filtered_boxes = np.empty((0, 4))
+        box_classes = np.empty((0,), dtype=int)
+        box_scores = np.empty(0, dtype=int)
         for box, conf, class_proba in zip(boxes, box_confidences, box_class_probs):
             scores = conf * np.max(class_proba, axis=-1, keepdims=True)
             filtering_mask = scores >= self.class_t
