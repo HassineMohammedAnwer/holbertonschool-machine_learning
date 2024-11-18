@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """0. Initialize Yolo"""
 import numpy as np
@@ -103,6 +102,7 @@ class Yolo:
             box_confidences.append(Objectness)
             box_class_probs.append(sigmoid_class_probs)
         return boxes, box_confidences, box_class_probs
+
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """filtering the bounding boxes based on confidence scores and class
         probabilities, and returning the relevant predictions.
@@ -110,11 +110,13 @@ class Yolo:
         filtered_boxes = []
         box_classes = []
         box_scores = []
-        for box, conf, class_proba in zip(boxes, box_confidences, box_class_probs):
+        for box, conf, class_proba in zip(boxes,
+                                          box_confidences, box_class_probs):
             scores = conf * np.max(class_proba, axis=-1, keepdims=True)
             filtering_mask = scores >= self.class_t
             filtered_boxes.append(box[filtering_mask[..., 0]])
-            box_classes.append(np.argmax(class_proba[filtering_mask[..., 0]], axis=-1))
+            box_classes.append(np.argmax(class_proba[filtering_mask[..., 0]],
+                                         axis=-1))
             box_scores.append(scores[filtering_mask[..., 0]])
         filtered_boxes = np.concatenate(filtered_boxes, axis=0)
         box_classes = np.concatenate(box_classes, axis=0)
