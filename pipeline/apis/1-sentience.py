@@ -9,15 +9,15 @@ def sentientPlanets():
     Don’t forget the pagination
     sentient type is either in the classification or designation attributes."""
     url = 'https://swapi-api.hbtn.io/api/species/'
-    sp=[]
-    home_pl=[]
+    sp = []
+    home_pl = []
     while url:
         res = requests.get(url).json()
         url = res.get('next')
-        sp +=res.get('results')
+        sp += res.get('results')
     for species in sp:
         if species.get('designation') == 'sentient' or \
-            species.get('classification') == 'sentient':
+        species.get('classification') == 'sentient':
             homeworld_url = species.get("homeworld")
             if homeworld_url:
                 planet_response = requests.get(homeworld_url).json()
