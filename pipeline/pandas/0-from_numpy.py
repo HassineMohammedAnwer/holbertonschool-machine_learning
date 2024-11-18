@@ -9,7 +9,7 @@ def from_numpy(array):
     The columns of the pd.DataFrame should be labeled in alphabetical order
     __and capitalized. There will not be more than 26 columns.
     Returns: the newly created pd.DataFrame"""
-    if array:
+    if array.size > 0:
         col = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
         num_col = array.shape[1]
         df = pd.DataFrame(array, columns=col[:num_col])
