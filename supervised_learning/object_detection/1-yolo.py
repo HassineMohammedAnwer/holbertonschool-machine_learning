@@ -70,6 +70,7 @@ class Yolo:
             t_y = output[:, :, :, 1]
             t_w = output[:, :, :, 2]
             t_h = output[:, :, :, 3]
+            image_height, image_width = image_size
             box = np.zeros((grid_height, grid_width, anchor_boxes, 4))
             cx, cy = np.meshgrid(np.arange(grid_width),
                                  np.arange(grid_height))
@@ -82,9 +83,9 @@ class Yolo:
             bx /= grid_width
             by /= grid_height
             bw = p_w * np.exp(t_w)
-            bw /= image_width
+            bw /= self.model.input.shape[1].value
             bh = p_h * np.exp(t_h)
-            bh /= image_height
+            bh /= self.model.input.shape[2].value
             x1 = (bx - bw / 2) * image_width
             y1 = (by - bh / 2) * image_height
             x2 = (bw / 2 + bx) * image_width
