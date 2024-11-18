@@ -169,7 +169,7 @@ class Yolo:
         pimages = []
         image_shapes = []
         for img in images:
-            img_h, img_w, img_c = images.shape
+            img_h, img_w, img_c = img.shape
             image_shapes.append([img_h, img_w])
             # Resize the images with inter-cubic interpolation
             input_w = self.model.input.shape[1]
