@@ -49,8 +49,10 @@ def kmeans(X, k, iterations=1000):
     You should use numpy.random.uniform exactly twice
     You may use at most 2 loops
     Returns: C, clss, or None, None on failure
-    C is a numpy.ndarray of shape (k, d) containing the centroid means for each cluster
-    clss is a numpy.ndarray of shape (n,) containing the index of the cluster in C that each data point belongs to
+    C is a numpy.ndarray of shape (k, d) containing the centroid means
+    __for each cluster
+    clss is a numpy.ndarray of shape (n,) containing the index of the
+    __cluster in C that each data point belongs to
     """
     if not isinstance(k, int) or k <= 0:
         return None, None
@@ -59,7 +61,6 @@ def kmeans(X, k, iterations=1000):
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
     centroids = initialize(X, k)
-
     for _ in range(iterations):
         prev_ctds = np.copy(centroids)
         # Euclidean
@@ -77,5 +78,4 @@ def kmeans(X, k, iterations=1000):
         prev_ctds = np.copy(centroids)
         euc = np.sqrt(np.sum((X - centroids[:, np.newaxis]) ** 2, axis=2))
         clss = np.argmin(euc, axis=0)
-
     return centroids, clss
