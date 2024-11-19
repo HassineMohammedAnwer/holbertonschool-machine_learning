@@ -9,7 +9,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         url = sys.argv[1]
         res = requests.get(url,
-                           headers={"Authorization": 'Accept': 'application/vnd.github+json'})
+                           headers={'Accept': 'application/vnd.github+json'})
         if res.status_code == 200:
             print(res.json()["location"])
         elif res.status_code == 404:
