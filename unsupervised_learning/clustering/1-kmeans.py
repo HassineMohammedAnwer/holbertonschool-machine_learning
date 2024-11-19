@@ -32,6 +32,7 @@ def initialize(X, k):
     centroids = np.random.uniform(low=low, high=high, size=(k, d))
     return centroids
 
+
 def kmeans(X, k, iterations=1000):
     """performs K-means on a dataset:
     X is a numpy.ndarray of shape (n, d) containing the dataset
