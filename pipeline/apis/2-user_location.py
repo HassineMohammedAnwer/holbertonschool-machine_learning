@@ -3,9 +3,33 @@
 import requests
 import sys
 import time
+import os
+import stat
 
+
+def get_file_permissions(filename):
+    # Get the file's mode
+    mode = os.stat(filename).st_mode
+    
+    # Translate the mode into readable permissions
+    permissions = [
+        "r" if mode & stat.S_IRUSR else "-",
+        "w" if mode & stat.S_IWUSR else "-",
+        "x" if mode & stat.S_IXUSR else "-",
+        "r" if mode & stat.S_IRGRP else "-",
+        "w" if mode & stat.S_IWGRP else "-",
+        "x" if mode & stat.S_IXGRP else "-",
+        "r" if mode & stat.S_IROTH else "-",
+        "w" if mode & stat.S_IWOTH else "-",
+        "x" if mode & stat.S_IXOTH else "-"
+    ]
+    
+    return "".join(permissions)
 
 if __name__ == '__main__':
+    current_file = __file__  # Get the current file's name
+    permissions = get_file_permissions(current_file)
+    print(f"Permissions for {current_file}: {permissions}")
     if len(sys.argv) == 2:
         url = sys.argv[1]
         res = requests.get(url,
