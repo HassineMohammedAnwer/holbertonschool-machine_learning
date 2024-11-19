@@ -57,12 +57,11 @@ def kmeans(X, k, iterations=1000):
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
     centroids = initialize(X, k)
-    prev_ctds = np.copy(centroids)
-    if centroids is None:
-        return None, None
     for _ in range(iterations):
-        dists = np.sqrt(np.sum((X - centroids[:, np.newaxis]) ** 2, axis=2))
-        clss = np.argmin(dists, axis=0)
+        prev_ctds = np.copy(centroids)
+        # Euclidean
+        euc = np.sqrt(np.sum((X - centroids[:, np.newaxis]) ** 2, axis=2))
+        clss = np.argmin(euc, axis=0)
         # Update centroids
         for i in range(k):
             points_in_cluster = X[clss == i]
@@ -73,5 +72,7 @@ def kmeans(X, k, iterations=1000):
         if np.allclose(centroids, prev_ctds):
             break
         prev_ctds = np.copy(centroids)
+        euc = np.sqrt(np.sum((X - centroids[:, np.newaxis]) ** 2, axis=2))
+        clss = np.argmin(euc, axis=0)
 
     return centroids, clss
