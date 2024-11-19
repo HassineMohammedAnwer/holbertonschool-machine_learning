@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """2. Rate me is you can!"""
 import requests
+from collections import Counter
 
 
 if __name__ == '__main__':
@@ -16,18 +17,17 @@ if __name__ == '__main__':
     res = requests.get(url).json()
     if res is None:
         exit(99)
-    rockets = []
-    for launch in res:
-        rocket_url = 'https://api.spacexdata.com/v4/rockets/{}'.format(
-            launch.get('rocket'))
-        roc = requests.get(rocket_url).json()
-        roc_name = roc.get('name')
-        if rockets.get(roc_name) is None:
-            rockets[roc_name] = 1
-            continue
-        rockets[roc_name] += 1
-    o_rockets = sorted(rockets.items(),
-                           key=lambda kv: kv[1],
-                           reverse=True)
-    for rocket, count in o_rockets:
-        print("{}: {}".format(rocket, count))
+    rocket_launch_counts = Counter(launch["rocket"] for launch in res)
+    rocket_url = 'https://api.spacexdata.com/v4/rockets/'
+    roc_res = requests.get(rocket_url).json()
+    rocket_id_to_name = {rocket["id"]: rocket["name"] for rocket in roc_res}
+    rocket_launch_list = [
+        (rocket_id_to_name[rocket_id], count)
+        for rocket_id, count in rocket_launch_counts.items()
+        if rocket_id in rocket_id_to_name
+    ]
+    sorted_rocket_launches = sorted(
+        rocket_launch_list, key=lambda x: (-x[1], x[0])
+    )
+    for rocket_name, count in sorted_rocket_launches:
+        print(f"{rocket_name}: {count}")
