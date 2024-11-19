@@ -56,7 +56,10 @@ def kmeans(X, k, iterations=1000):
         return None
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
+    if not isinstance(iterations, int) or iterations <= 0:
+        return None, None
     centroids = initialize(X, k)
+
     for _ in range(iterations):
         prev_ctds = np.copy(centroids)
         # Euclidean
