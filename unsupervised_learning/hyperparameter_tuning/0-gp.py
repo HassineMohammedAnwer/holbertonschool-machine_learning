@@ -29,9 +29,12 @@ class GaussianProcess:
         X1 is a numpy.ndarray of shape (m, 1)
         X2 is a numpy.ndarray of shape (n, 1)
         the kernel should use the Radial Basis Function (RBF)
-        sigma_f ** 2 * exp(-1/2 * squared Euclidean distance between the points / l )
-        Returns: the covariance kernel matrix as a numpy.ndarray of shape (m, n)
+        sigma_f ** 2 *
+           exp(-1/2 * squared Euclidean distance between the points / l )
+        Returns: the covariance kernel matrix as a numpy.ndarray(m, n)
         """
-        sqdist = np.sum(X1**2, 1).reshape(-1, 1) + np.sum(X2**2, 1) - 2 * np.dot(X1, X2.T)
+        sqdist = np.sum(X1**2, 1).reshape(-1,
+                                           1) + np.sum(X2**2,
+                                                        1) - 2 * np.dot(X1, X2.T)
         K = self.sigma_f**2 * np.exp(-0.5 * sqdist / self.l**2)
         return K
