@@ -32,8 +32,7 @@ if __name__ == '__main__':
     print(f"Permissions for {current_file}: {permissions}")
     if len(sys.argv) == 2:
         url = sys.argv[1]
-        res = requests.get(url,
-                           headers={"Authorization": "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"})
+        res = requests.get(url)
         if res.status_code == 200:
             print(res.json()["location"])
         elif res.status_code == 404:
