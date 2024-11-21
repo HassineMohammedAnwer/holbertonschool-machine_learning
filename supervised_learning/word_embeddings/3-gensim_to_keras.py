@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+"""3. Extract Word2Vec"""
+import keras as K
+
+
+def gensim_to_keras(model):
+    """ converts a gensim word2vec model to a keras Embedding layer:
+    model is a trained gensim word2vec models
+    Returns: the trainable keras Embedding
+    Note : the weights can / will be further updated in Keras."""
+    keyed_vectors = model.wv  # structure holding the result of training
+    weights = keyed_vectors.vectors  # vectors themselves, a 2D numpy array    
+    layer = K.layers.Embedding(
+        input_dim=weights.shape[0],
+        output_dim=weights.shape[1],
+        weights=[weights],
+        trainable=True,
+    )
+    return layer
