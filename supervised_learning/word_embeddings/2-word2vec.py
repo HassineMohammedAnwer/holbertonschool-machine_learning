@@ -15,7 +15,10 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5, negative=5
     seed is the seed for the random number generator
     workers is the number of worker threads to train the model
     Returns: the trained model"""
-    model = gensim.models.Word2Vec(sentences=sentences, vector_size=vector_size, window=window, min_count=min_count, workers=workers)
-    model.train(sentences, total_examples=model.corpus_count,
-                epochs=model.epochs)
+    #skip-gram and CBOW models, using either hierarchical softmax or negative sampling
+    # sg ({0, 1}, optional) – Training algorithm: 1 for skip-gram; otherwise CBOW.
+    model = gensim.models.Word2Vec(sentences=sentences, vector_size=vector_size,
+                                   window=window, min_count=min_count, workers=workers,
+                                   seed=seed, negative=negative, sg=cbow)
+    model.train(sentences, total_examples=model.corpus_count, epochs=epochs)
     return model
