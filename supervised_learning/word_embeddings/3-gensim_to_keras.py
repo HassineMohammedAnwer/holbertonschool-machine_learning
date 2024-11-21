@@ -9,7 +9,7 @@ def gensim_to_keras(model):
     Returns: the trainable keras Embedding
     Note : the weights can / will be further updated in Keras."""
     keyed_vectors = model.wv
-    weights = keyed_vectors.vectors    
+    weights = keyed_vectors.vectors
     layer = tf.keras.layers.Embedding(
         input_dim=weights.shape[0],
         output_dim=weights.shape[1],
