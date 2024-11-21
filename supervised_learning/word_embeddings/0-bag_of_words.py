@@ -8,8 +8,9 @@ def clean_and_tokenize(sentence):
     """Cleans and tokenizes"""
     sent = re.sub(r"\'s\b", "", sentence)
     cleaned = re.sub(r'[^a-zA-Z\s]', '', sent).lower()
-    tokens = cleaned.split()    
+    tokens = cleaned.split()
     return tokens
+
 
 def bag_of_words(sentences, vocab=None):
     """creates a bag of words embedding matrix:
