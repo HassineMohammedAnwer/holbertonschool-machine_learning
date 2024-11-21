@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """3. Extract Word2Vec"""
-import keras as K
+import tensorflow as tf
 
 
 def gensim_to_keras(model):
@@ -10,7 +10,7 @@ def gensim_to_keras(model):
     Note : the weights can / will be further updated in Keras."""
     keyed_vectors = model.wv  # structure holding the result of training
     weights = keyed_vectors.vectors  # vectors themselves, a 2D numpy array    
-    layer = K.layers.Embedding(
+    layer = tf.keras.layers.Embedding(
         input_dim=weights.shape[0],
         output_dim=weights.shape[1],
         weights=[weights],
