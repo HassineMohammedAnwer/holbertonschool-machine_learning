@@ -8,8 +8,8 @@ def gensim_to_keras(model):
     model is a trained gensim word2vec models
     Returns: the trainable keras Embedding
     Note : the weights can / will be further updated in Keras."""
-    keyed_vectors = model.wv  # structure holding the result of training
-    weights = keyed_vectors.vectors  # vectors themselves, a 2D numpy array    
+    keyed_vectors = model.wv
+    weights = keyed_vectors.vectors    
     layer = tf.keras.layers.Embedding(
         input_dim=weights.shape[0],
         output_dim=weights.shape[1],
