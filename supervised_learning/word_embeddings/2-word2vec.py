@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """1. TF-IDF"""
-from gensim.test.utils import common_texts
-from gensim.models import Word2Vec
+import gensim
 
 
 def word2vec_model(sentences, vector_size=100, min_count=5, window=5, negative=5, cbow=True, epochs=5, seed=0, workers=1):
@@ -16,7 +15,7 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5, negative=5
     seed is the seed for the random number generator
     workers is the number of worker threads to train the model
     Returns: the trained model"""
-    model = Word2Vec(sentences=sentences, vector_size=vector_size, window=window, min_count=min_count, workers=workers)
+    model = gensim.models.Word2Vec(sentences=sentences, vector_size=vector_size, window=window, min_count=min_count, workers=workers)
     model.train(sentences, total_examples=model.corpus_count,
                 epochs=model.epochs)
     return model
