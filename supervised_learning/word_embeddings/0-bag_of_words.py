@@ -34,7 +34,7 @@ def bag_of_words(sentences, vocab=None):
     num_features = len(vocab)
     embedding_matrix = np.zeros((num_sentences, num_features), dtype=int)
     word_md = {word: i for i, word in enumerate(vocab)}
-    print(word_md)
+    # print(word_md)
     for i, sentence in enumerate(sentences_l):
         for word in sentence:
             if word in word_md:
