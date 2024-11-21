@@ -26,10 +26,7 @@ def bag_of_words(sentences, vocab=None):
     # print('sentences_l')
     # print(sentences_l)
     if vocab is None:
-        all_words = []
-        for sentence in sentences_l:
-            all_words.extend(sentence)
-        vocab = sorted(set(all_words))
+        vocab = sorted({word for sentence in sentences_l for word in sentence})
     num_sentences = len(sentences_l)
     num_features = len(vocab)
     embedding_matrix = np.zeros((num_sentences, num_features), dtype=int)
