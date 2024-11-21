@@ -21,5 +21,7 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5, negative=5
     model = gensim.models.Word2Vec(sentences=sentences, vector_size=vector_size,
                                    window=window, min_count=min_count, workers=workers,
                                    seed=seed, negative=negative, sg=sg)
+    model.build_vocab(sentences)
+    # prepare the model vocabulary
     model.train(sentences, total_examples=model.corpus_count, epochs=epochs)
     return model
