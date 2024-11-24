@@ -22,7 +22,7 @@ def fasttext_model(sentences, vector_size=100, min_count=5, negative=5,
     # skip-gram/CBOW models,use either hier softmax or negative sampling
     # sg ({0, 1}, optional) – Training algorithm:1for skip-gram;or CBOW
     sg = 0 if cbow else 1
-    model = gensim.models.Word2Vec(sentences=sentences, negative=negative,
+    model = gensim.models.Word2Vec(sentences=sentences,
                                    vector_size=vector_size, window=window,
                                    min_count=min_count, workers=workers,
                                    seed=seed, negative=negative, sg=sg)
