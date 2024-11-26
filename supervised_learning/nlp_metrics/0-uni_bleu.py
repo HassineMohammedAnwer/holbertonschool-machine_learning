@@ -9,7 +9,8 @@ def uni_bleu(references, sentence):
     references is a list of reference translations
     each reference translation is a list of the words in the translation
     sentence is a list containing the model proposed sentence
-    references = [["the", "cat", "is", "on", "the", "mat"], ["there", "is", "a", "cat", "on", "the", "mat"]]
+    references = [["the", "cat", "is", "on", "the", "mat"],
+    ["there", "is", "a", "cat", "on", "the", "mat"]]
     sentence = ["there", "is", "a", "cat", "here"]
     Returns: the unigram BLEU score"""
     # occurrences of each word in sentence
@@ -19,12 +20,14 @@ def uni_bleu(references, sentence):
     for reference in references:
         reference_counts = Counter(reference)
         for word in sentence_counts:
-            max_ref_counts[word] = max(max_ref_counts.get(word, 0), reference_counts.get(word, 0))
+            max_ref_counts[word] = max(max_ref_counts.get(word, 0),
+                                       reference_counts.get(word, 0))
             # {'there': 1, 'is': 1, 'a': 1, 'cat': 1, 'here': 0}
     # Calculate the clipped count for the proposed sentence
-    count_clip = sum(min(sentence_counts[word], max_ref_counts.get(word, 0)) for word in sentence_counts)
+    count_clip = sum(min(sentence_counts[word],
+                         max_ref_counts.get(word, 0)) for word in sentence_counts)
     # 4
-    #precision
+    # precision
     precision = count_clip / len(sentence)
     # 0.8
     # Find the closest reference length
