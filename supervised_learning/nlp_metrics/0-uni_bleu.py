@@ -25,7 +25,9 @@ def uni_bleu(references, sentence):
             # {'there': 1, 'is': 1, 'a': 1, 'cat': 1, 'here': 0}
     # Calculate the clipped count for the proposed sentence
     count_clip = sum(min(sentence_counts[word],
-                         max_ref_counts.get(word, 0)) for word in sentence_counts)
+                         max_ref_counts.get(word,
+                                            0)) for word in
+                                            sentence_counts)
     # 4
     # precision
     precision = count_clip / len(sentence)
