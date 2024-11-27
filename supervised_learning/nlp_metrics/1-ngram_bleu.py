@@ -5,6 +5,7 @@ import numpy as np
 
 
 def generate_ngram(sentence, order):
+    """generate n-grams from a sentence"""
     sentence_ngrams = [' '.join(
         sentence[i:i + order])for i in range(len(sentence) - order + 1)]
     return sentence_ngrams
