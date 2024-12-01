@@ -11,8 +11,7 @@ def change_contrast(image, lower, upper):
     upper: float representing upper bound of random contrast factor range.
     Returns the contrast-adjusted image."""
     image = tf.image.convert_image_dtype(image, tf.float32)
-    seed = (0, 0)
     contrast_image = tf.image.stateless_random_contrast(
-        image=image, lower=lower, upper=upper, seed=seed
+        image=image, lower=lower, upper=upper
     )
     return tf.image.convert_image_dtype(contrast_image, image.dtype)
