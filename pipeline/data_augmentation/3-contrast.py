@@ -10,6 +10,7 @@ def change_contrast(image, lower, upper):
     lower: A float representing the lower bound of the random contrast factor range.
     upper: A float representing the upper bound of the random contrast factor range.
     Returns the contrast-adjusted image."""
+    seed = (0, 0)
     return tf.image.stateless_random_contrast(
-        image, lower, upper
+        image=image, lower=lower, upper=upper, seed=seed
     )
