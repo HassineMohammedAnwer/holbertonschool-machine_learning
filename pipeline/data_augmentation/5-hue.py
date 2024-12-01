@@ -10,5 +10,5 @@ def change_hue(image, delta):
     delta is the amount the hue should change
     Returns the altered image"""
     return tf.image.adjust_hue(
-        image, max_delta=delta, seed=None
+        image, delta=delta
     )
