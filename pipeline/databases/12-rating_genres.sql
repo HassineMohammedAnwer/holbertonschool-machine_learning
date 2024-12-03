@@ -4,7 +4,7 @@
 -- You can use only one SELECT statement
 -- The database name will be passed as an argument of the mysql command
 SELECT tv_genres.name , SUM(tv_show_ratings.rate) AS rating
-FROM tv_shows
+FROM tv_genres
 JOIN tv_show_genres
 on tv_show_genres.show_id = tv_shows.id
 JOIN tv_show_ratings
