@@ -29,7 +29,7 @@ def maximization(X, g):
         return None, None, None
     # Priors
     N_k = np.sum(g, axis=1)
-    if N_k != n:
+    if np.sum(N_k) != n:
         return None, None, None
     pi = N_k / n
     # Mean
