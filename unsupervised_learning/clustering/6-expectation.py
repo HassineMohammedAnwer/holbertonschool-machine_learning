@@ -34,4 +34,3 @@ def expectation(X, pi, m, S):
         return g, l
     except Exception:
         return None, None
-    
