@@ -19,25 +19,27 @@ def maximization(X, g):
     S is a numpy.ndarray of shape (k, d, d) containing the updated
     __covariance matrices for each cluster
     """
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+    try:
+        if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+            return None, None, None
+        if not isinstance(g, np.ndarray) or len(g.shape) != 2:
+            return None, None, None
+        n, d = X.shape
+        k, nn = g.shape
+        if n != nn:
+            return None, None, None
+        # Priors
+        N_k = np.sum(g, axis=1)
+        pi = N_k / n
+        # Mean
+        m = np.zeros((k, d))
+        # Covariance
+        S = np.zeros((k, d, d))
+        for i in range(k):
+            pi[i] = 1 / n * np.sum(g[i])
+            m[i] = np.matmul(g[i], X) / np.sum(g[i])
+            X_cent = X - m[i]
+            S[i] = np.matmul(np.multiply(g[i], X_cent.T), X_cent) / np.sum(g[i])
+        return pi, m, S
+    except Exception:
         return None, None, None
-    if not isinstance(g, np.ndarray) or len(g.shape) != 2:
-        return None, None, None
-    n, d = X.shape
-    k, nn = g.shape
-    if n != nn:
-        return None, None, None
-    # Priors
-    N_k = np.sum(g, axis=1)
-    if np.sum(N_k) != n:
-        return None, None, None
-    pi = N_k / n
-    # Mean
-    m = np.zeros((k, d))
-    # Covariance
-    S = np.zeros((k, d, d))
-    for i in range(k):
-        m[i] = np.matmul(g[i], X) / np.sum(g[i])
-        X_cent = X - m[i]
-        S[i] = np.matmul(np.multiply(g[i], X_cent.T), X_cent) / np.sum(g[i])
-    return pi, m, S
