@@ -30,7 +30,7 @@ def expectation(X, pi, m, S):
         d = np.sum(g, axis=0)
         g /= d
         # l = sum(log( sum((pi_k * P_k(X)) ))
-        l = np.sum(np.log(d))
-        return g, l
+        log_lik = np.sum(np.log(d))
+        return g, log_lik
     except Exception:
         return None, None
