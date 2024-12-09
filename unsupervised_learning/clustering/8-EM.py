@@ -45,17 +45,17 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     n, d = X.shape
     pi, m, S = initialize(X, k)
     prev_l = 0
-    g, l = expectation(X, pi, m, S)
+    g, lk = expectation(X, pi, m, S)
     for i in range(iterations):
         if verbose and i % 10 == 0:
             print("Log Likelihood after {} iterations: {}"
-                  .format(i, l.round(5)))
+                  .format(i, lk.round(5)))
         pi, m, S = maximization(X, g)
-        g, l = expectation(X, pi, m, S)
-        if prev_l is not None and abs(l - prev_l) <= tol:
+        g, lk = expectation(X, pi, m, S)
+        if prev_l is not None and abs(lk - prev_l) <= tol:
             break
-        prev_l = l
+        prev_l = lk
     if verbose:
         print("Log Likelihood after {} iterations: {}"
-              .format(i + 1, l.round(5)))
-    return pi, m, S, g, l
+              .format(i + 1, lk.round(5)))
+    return pi, m, S, g, lk
