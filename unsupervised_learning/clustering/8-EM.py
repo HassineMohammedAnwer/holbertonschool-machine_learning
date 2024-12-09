@@ -21,10 +21,6 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     __and after the last iteration
     {i} is the number of iterations of the EM algorithm
     {l} is the log likelihood, rounded to 5 decimal places
-    You should use:
-    initialize = __import__('4-initialize').initialize
-    expectation = __import__('6-expectation').expectation
-    maximization = __import__('7-maximization').maximization
     You may use at most 1 loop
     Returns: pi, m, S, g, l, or None, None, None, None, None on failure
     pi is a numpy.ndarray of shape (k,) containing the priors for each cluster
