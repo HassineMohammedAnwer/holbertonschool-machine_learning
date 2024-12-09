@@ -10,11 +10,11 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     """performs the expectation maximization for a GMM:
     X is a numpy.ndarray of shape (n, d) containing the data set
     k is a positive integer containing the number of clusters
-    iterations is a positive integer containing the maximum number of iterations
-    __for the algorithm
-    tol is a non-negative float containing tolerance of the log likelihood, used
-    __to determine early stopping i.e. if the difference is less than or equal to
-    __tol you should stop the algorithm
+    iterations is a positive integer containing the maximum number of
+    __iterations for the algorithm
+    tol is a non-negative float containing tolerance of the log likelihood,used
+    __to determine early stopping i.e. if the difference is less than or equal
+    __to tol you should stop the algorithm
     verbose is a boolean that determines if you should print information about
     __the algorithm
     If True, print Log Likelihood after {i} iterations: {l} every 10 iterations
