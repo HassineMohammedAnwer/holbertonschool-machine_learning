@@ -25,18 +25,18 @@ def forward(Observation, Emission, Transition, Initial):
     __path probabilities
     F[i, j] is the probability of being in hidden state i at
     __time j given the previous observations"""
-    if type(Observation) != np.ndarray:
+    if type(Observation) is not np.ndarray:
         return None, None
     T = Observation.shape[0]
 
-    if type(Emission) != np.ndarray:
+    if type(Emission) is not np.ndarray:
         return None, None
     N = Emission.shape[0]
 
-    if type(Transition) != np.ndarray:
+    if type(Transition) is not np.ndarray:
         return None, None
 
-    if type(Initial) != np.ndarray:
+    if type(Initial) is not np.ndarray:
         return None, None
 
     F = np.zeros((N, T))
