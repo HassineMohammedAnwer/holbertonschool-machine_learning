@@ -53,11 +53,11 @@ class GaussianProcess:
         K_s = self.kernel(self.X, X_s)
         K_m = self.kernel(X_s, X_s)
         K_x = np.linalg.inv(self.K)
-        
+
         mu = (K_s.T.dot(K_x).dot(self.Y)).reshape(-1)
-        sigma = np.diag(K_m - K_s.T.dot(K_x).dot(K_s))
-        
+        sigma = np.diag(K_m - K_s.T.dot(K_x).dot(K_s))        
         return mu, sigma
+
     def update(self, X_new, Y_new):
         """ updates a Gaussian Process:
         X_new is a numpy.ndarray of shape (1,) that represents the new
