@@ -8,7 +8,8 @@ def td_lambtha(env, V, policy, lambtha,
     """performs the TD(λ) algorithm:
     env is the environment instance
     V is a numpy.ndarray of shape (s,) containing the value estimate
-    policy is a function that takes in a state and returns the next action to take
+    policy is a function that takes in a state and
+    returns the next action to take
     lambtha is the eligibility trace factor
     episodes is the total number of episodes to train over
     max_steps is the maximum number of steps per episode
