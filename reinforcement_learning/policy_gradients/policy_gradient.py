@@ -4,12 +4,14 @@
 1. Compute the Monte-Carlo policy gradient"""
 import numpy as np
 
+
 def policy(matrix, weight):
     """Computes the policy with a weight matrix"""
     z = np.dot(matrix, weight)
     tmp = np.exp(z - np.max(z))
     prob = tmp / np.sum(tmp, axis=1, keepdims=True)
     return prob
+
 
 def policy_gradient(state, weight):
     """computes the Monte-Carlo policy gradient
