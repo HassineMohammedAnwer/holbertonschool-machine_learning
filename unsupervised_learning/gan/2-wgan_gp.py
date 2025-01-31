@@ -124,4 +124,3 @@ class WGAN_GP(keras.Model):
 
         # Return losses for monitoring
         return {"discr_loss": discr_loss, "gen_loss": gen_loss, "gp": gp}
-
