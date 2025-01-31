@@ -9,8 +9,7 @@ import matplotlib.pyplot as plt
 
 
 class Simple_GAN(keras.Model):
-    def __init( self, generator , discriminator , latent_generator, real_examples, 
-                batch_size=200, disc_iter=2, l_r=.005):
+    def __init__( self, generator , discriminator , latent_generator, real_examples, batch_size=200, disc_iter=2, learning_rate=.005):
         """constructor"""
         super().__init__()                         # run the __init__ of Keras.Model first. 
         self.latent_generator = latent_generator
