@@ -10,7 +10,8 @@ class WGAN_clip(keras.Model):
     """Wasserstein GAN class with clipping weights"""
     def __init__(self, generator, discriminator, latent_generator,
                  real_examples, batch_size=200, disc_iter=2,
-                 learning_rate=.005):
+                 learning_rate=.005, lambda_gp=10):
+        """aefzaef"""
         super().__init__()
         self.latent_generator = latent_generator
         self.real_examples = real_examples
@@ -19,8 +20,9 @@ class WGAN_clip(keras.Model):
         self.batch_size = batch_size
         self.disc_iter = disc_iter
         self.learning_rate = learning_rate
-        self.beta_1 = .5
+        self.beta_1 = .3
         self.beta_2 = .9
+        self.lambda_gp = lambda_gp
 
         # Define the generator loss and optimizer
         self.generator.loss = lambda x: -tf.reduce_mean(x)  # Wasserstein loss
