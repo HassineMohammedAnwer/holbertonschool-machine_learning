@@ -56,6 +56,22 @@ class WGAN_clip(keras.Model):
         random_indices = tf.random.shuffle(sorted_indices)[:size]
         return tf.gather(self.real_examples, random_indices)
 
+    # Generator of interpolated samples of size batch_size
+    def get_interpolated_sample(self, real_sample, fake_sample):
+        """Generate interpolated samples."""
+        u = tf.random.uniform([self.batch_size, 1])
+        return u * real_sample + (1 - u) * fake_sample
+
+    # Compute the gradient penalty
+    def gradient_penalty(self, interpolated_sample):
+        """Compute the gradient penalty."""
+        with tf.GradientTape() as gp_tape:
+            gp_tape.watch(interpolated_sample)
+            pred = self.discriminator(interpolated_sample, training=True)
+        grads = gp_tape.gradient(pred, [interpolated_sample])[0]
+        norm = tf.sqrt(tf.reduce_sum(tf.square(grads), axis=1))
+        return tf.reduce_mean((norm - 1.0) ** 2)
+
     # Overloading train_step()
     def train_step(self, useless_argument):
         """Training step for WGAN."""
