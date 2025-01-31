@@ -6,12 +6,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class WGAN_clip(keras.Model):
-    """Wasserstein GAN class with clipping weights"""
+class WGAN_GP(keras.Model):
+    """Wasserstein GAN with Gradient Penalty."""
     def __init__(self, generator, discriminator, latent_generator,
                  real_examples, batch_size=200, disc_iter=2,
                  learning_rate=.005, lambda_gp=10):
-        """aefzaef"""
         super().__init__()
         self.latent_generator = latent_generator
         self.real_examples = real_examples
@@ -76,40 +75,53 @@ class WGAN_clip(keras.Model):
 
     # Overloading train_step()
     def train_step(self, useless_argument):
-        """Training step for WGAN."""
+        """Training step for WGAN with gradient penalty."""
+        # Train the discriminator multiple times
         for _ in range(self.disc_iter):
             with tf.GradientTape() as tape:
+                # Get real and fake samples
                 real_samples = self.get_real_sample()
                 fake_samples = self.get_fake_sample(training=True)
 
+                # Get interpolated samples
                 interpolated_samples = self.get_interpolated_sample(
                     real_samples, fake_samples)
 
+                # Compute discriminator outputs
                 real_output = self.discriminator(real_samples, training=True)
                 fake_output = self.discriminator(fake_samples, training=True)
 
+                # Compute discriminator loss
                 discr_loss = self.discriminator.loss(real_output, fake_output)
 
+                # Compute gradient penalty
                 gp = self.gradient_penalty(interpolated_samples)
 
+                # Add gradient penalty to discriminator loss
                 new_discr_loss = discr_loss + self.lambda_gp * gp
 
+            # Compute gradients and update discriminator weights
             gradients = tape.gradient(
                 new_discr_loss, self.discriminator.trainable_variables)
             self.discriminator.optimizer.apply_gradients(
                 zip(gradients, self.discriminator.trainable_variables))
 
+        # Train the generator once
         with tf.GradientTape() as tape:
-
+            # Get fake samples
             fake_samples = self.get_fake_sample(training=True)
 
+            # Compute generator output
             gen_output = self.discriminator(fake_samples, training=True)
 
+            # Compute generator loss
             gen_loss = self.generator.loss(gen_output)
 
+        # Compute gradients and update generator weights
         gen_grad = tape.gradient(gen_loss, self.generator.trainable_variables)
         self.generator.optimizer.apply_gradients(
             zip(gen_grad, self.generator.trainable_variables))
 
         # Return losses for monitoring
         return {"discr_loss": discr_loss, "gen_loss": gen_loss, "gp": gp}
+
