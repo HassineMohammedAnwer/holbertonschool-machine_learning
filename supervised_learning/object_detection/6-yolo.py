@@ -188,11 +188,11 @@ class Yolo:
         return pimages, image_shapes
 
     def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
-        """Displays the image with all boundary boxes, class names, and box scores
+        """Displays image with all boundary boxes,class names,and box scores
         Args:
             image: a numpy.ndarray containing an unprocessed image
             boxes: a numpy.ndarray containing the boundary boxes for the image
-            box_classes: a numpy.ndarray containing the class indices for each box
+            box_classes: numpy.ndarray containing class indices for each box
             box_scores: a numpy.ndarray containing the box scores for each box
             file_name: the file path where the original image is stored
         """
@@ -206,7 +206,8 @@ class Yolo:
             text = f"{class_name} {score:.2f}"
             # Put the text above the bounding box
             cv2.putText(image, text, (x1, y1 - 5),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (
+                            0, 0, 255), 1, cv2.LINE_AA)
 
         # Display the image
         cv2.imshow(file_name, image)
