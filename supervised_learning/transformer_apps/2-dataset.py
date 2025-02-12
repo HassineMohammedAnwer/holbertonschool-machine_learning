@@ -45,15 +45,22 @@ class Dataset:
 
     def encode(self, pt, en):
         """encode"""
-        pt_tokens = self.tokenizer_pt.encode(pt.numpy().decode('utf-8'), add_special_tokens=True)
-        en_tokens = self.tokenizer_en.encode(en.numpy().decode('utf-8'), add_special_tokens=True)
-        
-        pt_tokens = self.tokenizer_pt.encode(pt_tokens,
+        pt_text = pt.numpy().decode('utf-8')
+        en_text = en.numpy().decode('utf-8')
+        pt_start = len(self.tokenizer_pt)
+        pt_end = len(self.tokenizer_pt) + 1
+        en_start = len(self.tokenizer_en)
+        en_end = len(self.tokenizer_en) + 1
+
+        pt_token_ids = self.tokenizer_pt.encode(pt_text,
                                              add_special_tokens=False)
-        en_tokens = self.tokenizer_en.encode(en_tokens,
+        en_token_ids = self.tokenizer_en.encode(en_text,
                                              add_special_tokens=False)
-        
-        return pt_tokens, en_tokens
+
+        encoded_pt = [pt_start] + pt_token_ids + [pt_end]
+        encoded_en = [en_start] + en_token_ids + [en_end]
+
+        return encoded_pt, encoded_en
 
     def tf_encode(self, pt, en):
         """tf_encode"""
