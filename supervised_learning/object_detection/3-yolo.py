@@ -125,15 +125,8 @@ class Yolo:
         return filtered_boxes, box_classes, box_scores
 
     def iou(self, box, boxes):
-        """Computes the Intersection over Union (IoU) between a box and a list of boxes.
-
-        Args:
-            box (numpy.ndarray): A single bounding box of shape (4,).
-            boxes (numpy.ndarray): Multiple bounding boxes of shape (N, 4).
-
-        Returns:
-            numpy.ndarray: IoU values of shape (N,).
-        """
+        """Computes the Intersection over Union (IoU)
+        between a box and a list of boxes"""
         # Extract coordinates
         x1 = np.maximum(box[0], boxes[:, 0])
         y1 = np.maximum(box[1], boxes[:, 1])
