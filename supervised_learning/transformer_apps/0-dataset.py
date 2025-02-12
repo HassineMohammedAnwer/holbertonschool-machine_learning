@@ -9,18 +9,15 @@ class Dataset:
         """Class constructor"""
         self.data_train = tfds.load('ted_hrlr_translate/pt_to_en', split='train', as_supervised=True)
         self.data_valid = tfds.load('ted_hrlr_translate/pt_to_en', split='validation', as_supervised=True)
-        self.tokenizer_en, self.tokenizer_pt = self.tokenize_dataset(self.data_train)
+        
+        self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(self.data_train)
 
     def tokenize_dataset(self, data):
-        """creates sub-word tokenizers for our dataset"""
-        pt_sentences = []
-        en_sentences = []
+        """tokenize"""
+        tokenizer_pt = transformers.BertTokenizerFast.from_pretrained('neuralmind/bert-base-portuguese-cased')
+        tokenizer_en = transformers.BertTokenizerFast.from_pretrained('bert-base-uncased')
         
-        for pt, en in data:
-            pt_sentences.append(pt.numpy().decode('utf-8'))
-            en_sentences.append(en.numpy().decode('utf-8'))
-        tokenizer_pt = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-            pt_sentences, target_vocab_size=2**13)
-        tokenizer_en = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-            en_sentences, target_vocab_size=2**13)
+        tokenizer_pt.model_max_length = 2**13
+        tokenizer_en.model_max_length = 2**13
+        
         return tokenizer_pt, tokenizer_en
