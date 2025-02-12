@@ -5,6 +5,7 @@ import tensorflow_datasets as tfds
 
 
 class Dataset:
+    """class dataset"""
     def __init__(self):
         """Class constructor"""
         self.data_train, self.data_valid = tfds.load(
