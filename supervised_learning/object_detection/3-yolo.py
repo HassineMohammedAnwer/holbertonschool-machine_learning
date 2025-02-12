@@ -124,6 +124,30 @@ class Yolo:
         box_scores = box_scores.flatten()
         return filtered_boxes, box_classes, box_scores
 
+    def iou(self, box, boxes):
+        """Computes the Intersection over Union (IoU) between a box and a list of boxes.
+
+        Args:
+            box (numpy.ndarray): A single bounding box of shape (4,).
+            boxes (numpy.ndarray): Multiple bounding boxes of shape (N, 4).
+
+        Returns:
+            numpy.ndarray: IoU values of shape (N,).
+        """
+        # Extract coordinates
+        x1 = np.maximum(box[0], boxes[:, 0])
+        y1 = np.maximum(box[1], boxes[:, 1])
+        x2 = np.minimum(box[2], boxes[:, 2])
+        y2 = np.minimum(box[3], boxes[:, 3])
+        # Compute intersection area
+        intersection_area = np.maximum(0, x2 - x1) * np.maximum(0, y2 - y1)
+        # Compute areas of the boxes
+        box_area = (box[2] - box[0]) * (box[3] - box[1])
+        boxes_area = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
+        # Compute IoU
+        iou = intersection_area / (box_area + boxes_area - intersection_area)
+        return iou
+
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
         """Return the filtered boxes, their classes, and scores in descending
         __order of confidence
@@ -131,4 +155,31 @@ class Yolo:
         box_predictions = []
         predicted_box_classes = []
         predicted_box_scores = []
+        unique_classes = np.unique(box_classes)
+        for c in unique_classes:
+            # Get indices of boxes belonging to the current class
+            c_indices = np.where(box_classes == c)[0]
+            c_boxes = filtered_boxes[c_indices]
+            c_scores = box_scores[c_indices]
+
+            sorted_idx = np.argsort(c_scores)[::-1]
+            c_boxes = c_boxes[sorted_idx]
+            c_scores = c_scores[sorted_idx]
+            # Apply NMS
+            while len(c_boxes) > 0:
+                # add box with highest score to predictions
+                box_predictions.append(c_boxes[0])
+                predicted_box_classes.append(c)
+                predicted_box_scores.append(c_scores[0])
+                # IoU of remaining boxes with selected box
+                ious = self.iou(c_boxes[0], c_boxes[1:])
+                # Remove boxes with IoU greater than threshold
+                keep_indices = np.where(ious <= self.nms_t)[0]
+                c_boxes = c_boxes[1:][keep_indices]
+                c_scores = c_scores[1:][keep_indices]
+
+        box_predictions = np.array(box_predictions)
+        predicted_box_classes = np.array(predicted_box_classes)
+        predicted_box_scores = np.array(predicted_box_scores)
+
         return box_predictions, predicted_box_classes, predicted_box_scores
