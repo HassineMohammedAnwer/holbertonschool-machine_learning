@@ -12,14 +12,17 @@ class Dataset:
             split=['train', 'validation'],
             as_supervised=True
         )
-        
-        self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(self.data_train)
+
+        self.tokenizer_pt, self.tokenizer_en =self.tokenize_dataset(
+            self.data_train)
 
     def tokenize_dataset(self, data):
         """tokenize"""
-        all_sentences = [(pt.numpy().decode("utf-8"), en.numpy().decode("utf-8"))
+        all_sentences = [(pt.numpy().decode("utf-8"), en.numpy().decode(
+            "utf-8"))
                          for pt, en in data]
-        pt_texts, en_texts = (list(pair) for pair in zip(*all_sentences)) if all_sentences else ([], [])
+        pt_texts, en_texts = (list(pair) for pair in zip(
+            *all_sentences)) if all_sentences else ([], [])
 
         base_pt = transformers.AutoTokenizer.from_pretrained(
             'neuralmind/bert-base-portuguese-cased',
