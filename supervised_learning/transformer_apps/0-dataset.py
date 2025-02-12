@@ -17,10 +17,10 @@ class Dataset:
 
     def tokenize_dataset(self, data):
         """tokenize"""
-        tokenizer_pt = transformers.BertTokenizerFast.from_pretrained('neuralmind/bert-base-portuguese-cased')
+        """tokenizer_pt = transformers.BertTokenizerFast.from_pretrained('neuralmind/bert-base-portuguese-cased')
         tokenizer_en = transformers.BertTokenizerFast.from_pretrained('bert-base-uncased')
         
         tokenizer_pt.model_max_length = 2**13
         tokenizer_en.model_max_length = 2**13
         
-        return tokenizer_pt, tokenizer_en
+        return tokenizer_pt, tokenizer_en"""
