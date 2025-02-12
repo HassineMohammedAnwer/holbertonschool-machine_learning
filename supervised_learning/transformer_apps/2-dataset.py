@@ -55,7 +55,11 @@ class Dataset:
 
     def tf_encode(self, pt, en):
         """tf_encode"""
-        pt_encoded, en_encoded = tf.py_function(self.encode, [pt, en], [tf.int64, tf.int64])
+        pt_encoded, en_encoded = tf.py_function(
+            func=self.encode,
+            inp=[pt, en],
+            Tout=[tf.int64, tf.int64]
+        )
         pt_encoded.set_shape([None])
         en_encoded.set_shape([None])
         return pt_encoded, en_encoded
