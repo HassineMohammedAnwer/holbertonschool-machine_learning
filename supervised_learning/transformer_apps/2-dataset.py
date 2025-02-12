@@ -53,9 +53,9 @@ class Dataset:
         en_end = len(self.tokenizer_en) + 1
 
         pt_token_ids = self.tokenizer_pt.encode(pt_text,
-                                             add_special_tokens=False)
+                                                add_special_tokens=False)
         en_token_ids = self.tokenizer_en.encode(en_text,
-                                             add_special_tokens=False)
+                                                add_special_tokens=False)
 
         encoded_pt = [pt_start] + pt_token_ids + [pt_end]
         encoded_en = [en_start] + en_token_ids + [en_end]
