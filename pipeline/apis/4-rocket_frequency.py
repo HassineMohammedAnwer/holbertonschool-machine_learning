@@ -10,8 +10,10 @@ if __name__ == '__main__':
     The date (in local time)
     The rocket name
     The name (with the locality) of the launchpad
-    <launch name> (<date>) <rocket name> - <launchpad name> (<launchpad locality>)
-    use the date_unix for sorting it - and if 2 launches have the same date, use
+    <launch name> (<date>) <rocket name> - <launchpad name>
+    __(<launchpad locality>)
+    use the date_unix for sorting it - and if 2 launches have
+    __the same date, use
     __the first one in the API result."""
     url = 'https://api.spacexdata.com/v4/launches'
     res = requests.get(url).json()
