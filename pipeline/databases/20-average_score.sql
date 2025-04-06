@@ -9,13 +9,8 @@ CREATE PROCEDURE ComputeAverageScoreForUser (
     IN user_id INT
 )
 BEGIN
-    DECLARE calculated_average FLOAT;
-    SELECT COALESCE(AVG(score), 0)
-    INTO calculated_average
-    FROM corrections
-    WHERE corrections.user_id = user_id;
-    UPDATE users
-    SET average_score = calculated_average
-    WHERE id = user_id;
-END$$
+	UPDATE users SET average_score=(
+	SELECT AVG(score) FROM corrections WHERE user_id=user_id_new)
+	WHERE id=user_id_new;
+END; //
 DELIMITER ;
