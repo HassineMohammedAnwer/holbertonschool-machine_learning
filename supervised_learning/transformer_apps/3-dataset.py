@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""3. Dataset"""
+"""3. Dataset with pipeline"""
 import transformers
 import tensorflow_datasets as tfds
 import tensorflow as tf
@@ -7,7 +7,7 @@ import tensorflow as tf
 
 class Dataset:
     """class dataset"""
-    def __init__(self):
+    def __init__(self, batch_size, max_len):
         """Class constructor"""
         self.data_train, self.data_valid = tfds.load(
             'ted_hrlr_translate/pt_to_en',
@@ -17,8 +17,37 @@ class Dataset:
 
         self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(
             self.data_train)
+        
+        # Process training data
         self.data_train = self.data_train.map(self.tf_encode)
+        self.data_train = self.data_train.filter(
+            lambda pt, en: tf.logical_and(
+                tf.size(pt) <= max_len,
+                tf.size(en) <= max_len
+            )
+        )
+        self.data_train = self.data_train.cache()
+        self.data_train = self.data_train.shuffle(20000)
+        self.data_train = self.data_train.padded_batch(
+            batch_size,
+            padded_shapes=([None], [None])
+        )
+        self.data_train = self.data_train.prefetch(
+            tf.data.experimental.AUTOTUNE
+        )
+        
+        # Process validation data
         self.data_valid = self.data_valid.map(self.tf_encode)
+        self.data_valid = self.data_valid.filter(
+            lambda pt, en: tf.logical_and(
+                tf.size(pt) <= max_len,
+                tf.size(en) <= max_len
+            )
+        )
+        self.data_valid = self.data_valid.padded_batch(
+            batch_size,
+            padded_shapes=([None], [None])
+        )
 
     def tokenize_dataset(self, data):
         """tokenize"""
