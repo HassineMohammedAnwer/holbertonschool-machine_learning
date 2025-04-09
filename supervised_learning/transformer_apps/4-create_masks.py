@@ -21,15 +21,15 @@ def create_masks(inputs, target):
     __in the input received by the decoder. It takes the maximum
     __between a lookaheadmask and the decoder target padding mask.
     decoder_mask is the tf.Tensor padding mask of shape
-    __(batch_size, 1, 1, seq_len_in) used in the 2nd attention block in the decoder.
+    __(batch_size, 1, 1, seq_len_in) used in 2nd attention block in decoder.
     """
     encoder_m = tf.cast(tf.math.equal(inputs, 0), tf.float32)
     encoder_m = encoder_m[:, tf.newaxis, tf.newaxis, :]
     decoder_m = tf.cast(tf.math.equal(inputs, 0), tf.float32)
     decoder_m = decoder_m[:, tf.newaxis, tf.newaxis, :]
     size = tf.shape(target)[1]
-    look_ahead_mask = 1 - tf.linalg.band_part(tf.ones((size, size)), -1, 0)
-    dec_target_padding_mask = tf.cast(tf.math.equal(target, 0), tf.float32)
-    dec_target_padding_mask = dec_target_padding_mask[:, tf.newaxis, tf.newaxis, :]
-    combined_m = tf.maximum(dec_target_padding_mask, look_ahead_mask)
+    look_ahead_m = 1 - tf.linalg.band_part(tf.ones((size, size)), -1, 0)
+    dec_target_padding_m = tf.cast(tf.math.equal(target, 0), tf.float32)
+    dec_target_padding_m = dec_target_padding_m[:, tf.newaxis, tf.newaxis, :]
+    combined_m = tf.maximum(dec_target_padding_m, look_ahead_m)
     return encoder_m, combined_m, decoder_m
