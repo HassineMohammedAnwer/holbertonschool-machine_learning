@@ -38,28 +38,25 @@ class BayesianOptimization:
 
     def optimize(self, iterations=100):
         """
-        optimizes the black-box function:
-        iterations is the maximum number of
-        __iterations to perform
-        If the next proposed point is one that
-        __has already been sampled, optimization should be stopped early
-        Returns: X_opt, Y_opt
-        X_opt is a numpy.ndarray of shape (1,)
-        __representing the optimal point
-        Y_opt is a numpy.ndarray of shape (1,)
-        __representing the optimal function value
+        Optimizes the black-box function
         """
+        sampled_points = []  # Track sampled points for comparison
+
         for _ in range(iterations):
             X_next, _ = self.acquisition()
-            Y_next = self.f(X_next)
-            if any(np.allclose(X_next, x) for x in self.gp.X):
-                break
-
-            self.gp.update(X_next, Y_next)
+            # Check if point already sampled (with tolerance)
+            for x in sampled_points:
+                if np.abs(X_next - x) < 1e-8:
+                    break
+            else:  # Only execute if no break occurred
+                Y_next = self.f(X_next)
+                self.gp.update(X_next, Y_next)
+                sampled_points.append(X_next[0])  # Store scalar value
+                continue
+            break  # Exit if point already sampled
+        # Find optimal point
         if self.minimize:
-            idx = np.argmin(self.gp.Y)
+            index = np.argmin(self.gp.Y)
         else:
-            idx = np.argmax(self.gp.Y)
-        X_opt = self.gp.X[idx]
-        Y_opt = self.gp.Y[idx]
-        return X_opt, Y_opt
+            index = np.argmax(self.gp.Y)
+        return self.gp.X[index], self.gp.Y[index]
