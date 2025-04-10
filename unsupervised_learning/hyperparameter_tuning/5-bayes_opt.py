@@ -51,10 +51,10 @@ class BayesianOptimization:
         """
         for _ in range(iterations):
             X_next, _ = self.acquisition()
+            Y_next = self.f(X_next)
             if any(np.allclose(X_next, x) for x in self.gp.X):
                 break
 
-            Y_next = self.f(X_next)
             self.gp.update(X_next, Y_next)
         if self.minimize:
             idx = np.argmin(self.gp.Y)
