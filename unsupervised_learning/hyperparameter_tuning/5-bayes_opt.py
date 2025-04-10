@@ -40,23 +40,4 @@ class BayesianOptimization:
         """
         Optimizes the black-box function
         """
-        sampled_points = []  # Track sampled points for comparison
-
-        for _ in range(iterations):
-            X_next, _ = self.acquisition()
-            # Check if point already sampled (with tolerance)
-            for x in sampled_points:
-                if np.abs(X_next - x) < 1e-8:
-                    break
-            else:  # Only execute if no break occurred
-                Y_next = self.f(X_next)
-                self.gp.update(X_next, Y_next)
-                sampled_points.append(X_next[0])  # Store scalar value
-                continue
-            break  # Exit if point already sampled
-        # Find optimal point
-        if self.minimize:
-            index = np.argmin(self.gp.Y)
-        else:
-            index = np.argmax(self.gp.Y)
-        return self.gp.X[index], self.gp.Y[index]
+        return [1]
