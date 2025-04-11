@@ -10,8 +10,10 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
     nb_episodes: number of episodes used for training
     alpha: the learning rate
     gamma: the discount factor
-    You should use policy_gradient = __import__('policy_gradient').policy_gradient
-    Return: all values of the score (sum of all rewards during one episode loop)
+    You should use policy_gradient =
+    __import__('policy_gradient').policy_gradient
+    Return: all values of the score
+    __(sum of all rewards during one episode loop)
     You need print the current episode number and the score after each loop
     in a format: Episode: {} Score: {}"""
     weights = np.random.rand(
