@@ -28,17 +28,15 @@ class Decoder(tf.keras.layers.Layer):
     
     def call(self, x, encoder_output, training, look_ahead_mask, padding_mask):
         """
-        Forward pass for the decoder.
-        
-        Args:
-            x: Tensor of shape (batch, target_seq_len, dm) containing the input to the decoder
-            encoder_output: Tensor of shape (batch, input_seq_len, dm) containing the encoder output
-            training: Boolean indicating if the model is training
-            look_ahead_mask: Mask for the first multi-head attention layer
-            padding_mask: Mask for the second multi-head attention layer
-            
-        Returns:
-            Tensor of shape (batch, target_seq_len, dm) containing the decoder output
+        x - a tensor of shape (batch, target_seq_len, dm)
+        __containing the input to the decoder
+        encoder_output - a tensor of shape
+        __(batch, input_seq_len, dm)containing the output of the encoder
+        training - a boolean to determine if the model is training
+        look_ahead_mask - the mask to be applied to the first multi head attention layer
+        padding_mask - the mask to be applied to the second multi head attention layer
+        Returns: a tensor of shape (batch, target_seq_len, dm)
+        __containing the decoder output
         """
         seq_len = tf.shape(x)[1]
         x = self.embedding(x)
