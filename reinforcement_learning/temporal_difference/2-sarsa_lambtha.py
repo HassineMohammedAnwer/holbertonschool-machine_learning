@@ -28,7 +28,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         step = 0
         done = False
         truncated = False
-        while not (done or truncated) and step < max_steps:
+        while not while not done:
             next_state, reward, done, truncated, _ = env.step(action)
             if np.random.random() < epsilon:
                 next_action = np.random.randint(n_actions)
