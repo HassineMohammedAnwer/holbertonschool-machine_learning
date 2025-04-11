@@ -21,6 +21,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     """
     nS, nA = Q.shape
     initial_epsilon = epsilon
+
     def select_action(state, epsilon):
         """Epsilon-greedy action selection"""
         if np.random.random() < epsilon:
