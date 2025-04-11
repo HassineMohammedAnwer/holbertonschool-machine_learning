@@ -18,27 +18,34 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     Returns: Q, the updated Q table
     """
     E = np.zeros_like(Q)
-    for episode in range(episodes):
+    for _ in range(episodes):
         E.fill(0)
-        state = env.reset()[0]
-        if np.random.random() < epsilon:
-            action = np.random.randint(n_actions)
-        else:
-            action = np.argmax(Q[state])
-        step = 0
         done = False
         truncated = False
-        while not while not done:
+        state = env.reset()[0]
+        action = get_action(state, Q, epsilon)
+
+        while not done:
             next_state, reward, done, truncated, _ = env.step(action)
-            if np.random.random() < epsilon:
-                next_action = np.random.randint(n_actions)
-            else:
-                next_action = np.argmax(Q[next_state])
-            td_error = reward + gamma * Q[next_state, next_action] - Q[state, action]
+            next_action = get_action(next_state, Q, epsilon)
+
+            target = reward + gamma * Q[next_state, next_action]
+            actual = Q[state, action]
+            delta = target - actual
+
             E[state, action] += 1
-            Q += alpha * td_error * E
+            Q += alpha * delta * E
             E *= gamma * lambtha
+
             state, action = next_state, next_action
-            step += 1
         epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
     return Q
+
+
+def get_action(state, Q, epsilon):
+    """
+    Epsilon-greedy action selection    """
+    n_actions = Q.shape[1]
+    if np.random.random() < epsilon:
+        return np.random.randint(n_actions)
+    return np.argmax(Q[state])
