@@ -19,30 +19,28 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     """
     nS = env.observation_space.n
     nA = env.action_space.n
-    
+
     for episode in range(episodes):
         state = env.reset()
         if isinstance(state, tuple):
             state = state[0]
-        if np.random.uniform() < epsilon:
+        if np.random.random() < epsilon:
             action = env.action_space.sample()
         else:
             action = np.argmax(Q[state])
-            
         eligibility = np.zeros((nS, nA))
-        
         for _ in range(max_steps):
             next_state, reward, done, _, _ = env.step(action)
-            if np.random.uniform() < epsilon:
+            if np.random.random() < epsilon:
                 next_action = env.action_space.sample()
             else:
                 next_action = np.argmax(Q[next_state])
-            delta = reward + gamma * Q[next_state][next_action] - Q[state][action]
+            td_error = reward + gamma * Q[next_state][next_action] - Q[state][action]
             eligibility[state][action] += 1
-            Q += alpha * delta * eligibility
+            Q += alpha * td_error * eligibility
             eligibility *= gamma * lambtha
             state, action = next_state, next_action
             if done:
                 break
-        epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
+        epsilon = max(min_epsilon, epsilon - epsilon_decay)
     return Q
