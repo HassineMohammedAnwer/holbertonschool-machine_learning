@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-lkh"""
+lkh
+"""
+
 import numpy as np
 
 
@@ -24,7 +26,8 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     initial_epsilon = epsilon
 
     def select_action(state, epsilon):
-        """Epsilon-greedy action selection"""
+        """
+        Epsilon-greedy action selection"""
         if np.random.random() < epsilon:
             return np.random.randint(nA)
         return np.argmax(Q[state])
