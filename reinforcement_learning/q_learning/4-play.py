@@ -2,7 +2,7 @@
 """exploitation or exploration"""
 
 import numpy as np
-import gym
+
 
 def play(env, Q, max_steps=100):
     """k,p,p,ùp,"""
