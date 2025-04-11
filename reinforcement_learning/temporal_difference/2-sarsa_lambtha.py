@@ -17,8 +17,11 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     epsilon_decay is the decay rate for updating epsilon between episodes
     Returns: Q, the updated Q table
     """
+    E = np.zeros_like(Q)
     for episode in range(episodes):
-        E = np.zeros_like(Q)
+        E.fill(0)
+        done = False
+        truncated = False
         state = env.reset()[0]
         if np.random.uniform() < epsilon:
             action = env.action_space.sample()
