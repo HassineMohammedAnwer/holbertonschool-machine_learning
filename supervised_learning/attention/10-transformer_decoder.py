@@ -6,7 +6,6 @@ DecoderBlock = __import__('8-transformer_decoder_block').DecoderBlock
 class Decoder(tf.keras.layers.Layer):
     """
     Decoder"""
-    
     def __init__(self, N, dm, h, hidden, target_vocab, max_seq_len, drop_rate=0.1):
         """
         N: Number of blocks in the decoder
