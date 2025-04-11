@@ -4,7 +4,7 @@ import numpy as np
 policy_gradient = __import__('policy_gradient').policy_gradient
 
 
-def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
+def train(env, nb_episodes, alpha=0.000045, gamma=0.98, show_result=False):
     """ implements a full training.
     env: initial environment
     nb_episodes: number of episodes used for training
@@ -20,34 +20,31 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
     adding a last optional parameter show_result (default: False).
     When this parameter is set to True, you should render the
     __environment every 1000 episodes computed."""
-    weights = np.random.rand(
+    weight = np.random.rand(
         env.observation_space.shape[0],
         env.action_space.n
     )
-    episode_scores = []
+    scores = []
     for episode in range(nb_episodes):
         state, _ = env.reset()
-        episode_data = {
-            'gradients': [],
-            'rewards': []
-        }
-        should_render = show_result and (episode % 1000 == 0 or episode == nb_episodes - 1)
+        grads = []
+        rewards = []
         done = False
+        render_episode = show_result and (episode % 1000 == 0)
         while not done:
-            if should_render:
+            if render_episode:
                 env.render()
-            action, grad = policy_gradient(state, weights)
-            next_state, reward, terminated, truncated, _ = env.step(action)
+            action, grad = policy_gradient(state, weight)
+            state, reward, terminated, truncated, _ = env.step(action)
             done = terminated or truncated
-            episode_data['gradients'].append(grad)
-            episode_data['rewards'].append(reward)
-            state = next_state
-        total_reward = sum(episode_data['rewards'])
-        episode_scores.append(total_reward)
-        for i in range(len(episode_data['rewards'])):
+            grads.append(grad)
+            rewards.append(reward)
+        total_reward = sum(rewards)
+        scores.append(total_reward)
+        for i in range(len(grads)):
             discounted_return = 0
-            for t, r in enumerate(episode_data['rewards'][i:]):
+            for t, r in enumerate(rewards[i:]):
                 discounted_return += r * (gamma ** t)
-            weights += alpha * episode_data['gradients'][i] * discounted_return
+            weight += alpha * grads[i] * discounted_return
         print(f'Episode: {episode} Score: {total_reward}')
-    return episode_scores
+    return scores
