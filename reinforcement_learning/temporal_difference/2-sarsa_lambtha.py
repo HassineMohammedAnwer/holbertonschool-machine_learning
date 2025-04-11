@@ -23,14 +23,13 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         done = False
         truncated = False
         state = env.reset()[0]
-        if np.random.uniform() < epsilon:
+        if np.random.random() < epsilon:
             action = env.action_space.sample()
         else:
             action = np.argmax(Q[state])
-        
         for _ in range(max_steps):
             next_state, reward, done, truncated, _ = env.step(action)
-            if np.random.uniform() < epsilon:
+            if np.random.random() < epsilon:
                 next_action = env.action_space.sample()
             else:
                 next_action = np.argmax(Q[next_state])
@@ -41,5 +40,5 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             state, action = next_state, next_action
             if done or truncated:
                 break
-        epsilon = max(min_epsilon, epsilon - epsilon_decay)
+        epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
     return Q
