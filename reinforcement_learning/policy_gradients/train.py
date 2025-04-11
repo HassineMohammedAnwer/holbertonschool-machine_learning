@@ -31,9 +31,10 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
             'gradients': [],
             'rewards': []
         }
+        should_render = show_result and (episode % 1000 == 0 or episode == nb_episodes - 1)
         done = False
         while not done:
-            if show_result and episode % 1000 == 0:
+            if should_render:
                 env.render()
             action, grad = policy_gradient(state, weights)
             next_state, reward, terminated, truncated, _ = env.step(action)
