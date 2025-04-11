@@ -3,6 +3,7 @@
 
 import numpy as np
 
+
 def epsilon_greedy(Q, state, epsilon):
     """uses epsilon-greedy to determine the next action
     """
