@@ -4,7 +4,7 @@ import numpy as np
 
 
 def viterbi(Observation, Emission, Transition, Initial):
-    """calculates the most likely sequence of hidden 
+    """calculates the most likely sequence of hidden
     __states for a hidden markov model:
     Observation is a numpy.ndarray of shape (T,)
     ___that contains the index of the observation
@@ -16,7 +16,8 @@ def viterbi(Observation, Emission, Transition, Initial):
     M is the number of all possible observations
     Transition is a 2D numpy.ndarray of shape (N, N)
     ___containing the transition probabilities
-    Transition[i, j] is the probability of transitioning from the hidden state i to j
+    Transition[i, j] is the probability of
+    ___transitioning from the hidden state i to j
     Initial a numpy.ndarray of shape (N, 1) containing the
     ___probability of starting in a particular hidden state
     Returns: path, P, or None, None on failure
@@ -46,8 +47,8 @@ def viterbi(Observation, Emission, Transition, Initial):
     P = np.max(V[:, -1])
     if P <= 0:
         return None, None
-    l = np.argmax(V[:, -1])
-    path = [l]
+    last = np.argmax(V[:, -1])
+    path = [last]
     for t in reversed(range(1, T)):
         prev_state = b_pointer[path[-1], t]
         path.append(prev_state)
