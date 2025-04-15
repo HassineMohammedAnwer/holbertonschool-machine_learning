@@ -117,19 +117,9 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     __None on failure"""
     if not isinstance(Observations, np.ndarray) or Observations.ndim != 1:
         return None, None
-    T = Observations.size
-    M, M_check = Transition.shape
-    if M != M_check or Emission.shape[0] != M:
-        return None, None
-    N = Emission.shape[1]
-    if Initial.shape != (M, 1):
-        return None, None
-    if (Observations < 0).any() or (Observations >= N).any():
-        return None, None
-
-    M, N = Emission.shape
-    if T > 0 and ((Observations < 0).any() or (Observations >= M).any()):
-        return None, None
+    N = Transition.shape[0]
+    M = Emission.shape[1]
+    T = Observations.shape[0]
     for _ in range(iterations):
         P_f, F = forward(Observations, Emission, Transition, Initial)
         scaling = np.zeros(T)
