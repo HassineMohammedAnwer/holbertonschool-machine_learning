@@ -43,7 +43,7 @@ class BayesianOptimization:
         """
         for _ in range(iterations):
             X_next, _ = self.acquisition()
-            if any(np.allclose(X_next, x_prev) for x_prev in self.gp.X):
+            if np.any(np.isclose(X_next, self.gp.X)):
                 break
             Y_next = self.f(X_next)
             self.gp.update(X_next, Y_next)
@@ -53,5 +53,5 @@ class BayesianOptimization:
             idx = np.argmax(self.gp.Y)
         X_opt = self.gp.X[idx]
         Y_opt = self.gp.Y[idx]
-
+    
         return X_opt, Y_opt
