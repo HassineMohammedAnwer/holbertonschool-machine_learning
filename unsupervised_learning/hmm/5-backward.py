@@ -28,8 +28,9 @@ def backward(Observation, Emission, Transition, Initial):
     if (not isinstance(Observation, np.ndarray) or Observation.ndim != 1 or
             not isinstance(Emission, np.ndarray) or Emission.ndim != 2 or
             not isinstance(Transition, np.ndarray) or Transition.ndim != 2 or
-            not isinstance(Initial, np.ndarray) or Initial.ndim != 2) or
-            Initial.shape[1] != 1:
+            not isinstance(Initial, np.ndarray) or Initial.ndim != 2):
+        return None, None
+    if Initial.shape[1] != 1:
         return None, None
     N, M = Emission.shape
     if Transition.shape != (N, N) or Initial.shape[0] != N:
