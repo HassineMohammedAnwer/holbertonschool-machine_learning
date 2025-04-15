@@ -52,6 +52,7 @@ def forward(Observation, Emission, Transition, Initial):
     P = F[:, -1:].sum()
     return P, F
 
+
 def backward(Observation, Emission, Transition, Initial):
     """performs the backward algorithm for a hidden markov model:
     Observation is a numpy.ndarray of shape
@@ -97,6 +98,7 @@ def backward(Observation, Emission, Transition, Initial):
     P = np.sum(initial_probs * emission_init * B[:, 0])
 
     return P, B
+
 
 def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     """performs the Baum-Welch algorithm for a hidden markov model:
