@@ -122,31 +122,18 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     T = Observations.shape[0]
     for _ in range(iterations):
         P_f, F = forward(Observations, Emission, Transition, Initial)
-        scaling = np.zeros(T)
-        scaling[0] = 1.0 / (F[:, 0].sum() + 1e-10)
-        for t in range(1, T):
-            scaling[t] = 1.0 / (F[:, t].sum() + 1e-10)
         p_b, B = backward(Observations, Emission, Transition, scaling)
-        if P_f <= 0:
-            return None, None
-        xi = F[:, None, :-1] * Transition[:, :, None] * Emission[:, Observations[1:]][None, :, :] * B[None, :, 1:]
-        xi /= P_f
-        xi_sum = xi.sum(axis=(0, 1), keepdims=True)
-        xi_sum[xi_sum == 0] = 1e-10
-        xi /= xi_sum
+        gamma = np.zeros((N, T))
+        xi = np.zeros((N, N, T-1))
+        for t in range(T-1):
+            xi[:, :, t] = (F[:, t, np.newaxis] * Transition *
+                           Emission[:, Observations[t+1]] * B[:, t+1]) / P_f
         gamma = np.sum(xi, axis=1)
-        gamma_last = (F[:, -1] * B[:, -1]).reshape(-1, 1)
-        gamma_last_sum = gamma_last.sum()
-        gamma_last = gamma_last / gamma_last_sum if gamma_last_sum != 0 else gamma_last
-        gamma = np.hstack((gamma, gamma_last))
-        sum_xi = np.sum(xi, axis=2)
-        sum_gamma = np.sum(gamma[:, :-1], axis=1, keepdims=True)
-        sum_gamma[sum_gamma == 0] = 1e-10
-        Transition = sum_xi / sum_gamma
-        mask = (Observations[:, np.newaxis] == np.arange(M))
-        sum_emit = gamma @ mask
-        sum_gamma_total = np.sum(gamma, axis=1, keepdims=True)
-        sum_gamma_total[sum_gamma_total == 0] = 1e-10
-        Emission = sum_emit / sum_gamma_total
-
+        prod = (F[:, T-1] * B[:, T-1]).reshape((-1, 1))
+        gamma = np.hstack((gamma,  prod / np.sum(prod)))
+        Transition = np.sum(xi, axis=2) / \
+            np.sum(gamma[:, :-1], axis=1).reshape((-1, 1))
+        for k in range(M):
+            Emission[:, k] = np.sum(gamma[:, Observations == k], axis=1)
+        Emission /= np.sum(gamma, axis=1).reshape(-1, 1)
     return Transition, Emission
