@@ -33,7 +33,7 @@ def viterbi(Observation, Emission, Transition, Initial):
         return None, None
     T = Observation.shape[0]
     V = np.zeros((N, T))
-    b_pointerr = np.zeros((N, T), dtype=int)
+    b_pointer = np.zeros((N, T), dtype=int)
     first_obs = Observation[0]
     V[:, 0] = (Initial[:, 0] * Emission[:, first_obs])
     for t in range(1, T):
@@ -42,14 +42,14 @@ def viterbi(Observation, Emission, Transition, Initial):
             max_idx = np.argmax(trans_probs)
             max_val = trans_probs[max_idx]
             V[j, t] = max_val * Emission[j, Observation[t]]
-            backptr[j, t] = max_idx
+            b_pointer[j, t] = max_idx
     P = np.max(V[:, -1])
     if P <= 0:
         return None, None
     l = np.argmax(V[:, -1])
     path = [l]
     for t in reversed(range(1, T)):
-        prev_state = backptr[path[-1], t]
+        prev_state = b_pointer[path[-1], t]
         path.append(prev_state)
     path = path[::-1]
 
