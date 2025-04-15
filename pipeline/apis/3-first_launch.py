@@ -12,7 +12,7 @@ if __name__ == '__main__':
     <launch name> (<date>) <rocket name> - <launchpad name> (<launchpad locality>)
     use the date_unix for sorting it - and if 2 launches have the same date, use
     __the first one in the API result."""
-    url = 'https://api.spacexdata.com/v4/launches'
+    url = 'https://api.spacexdata.com/v4/launches/upcoming'
     res = requests.get(url).json()
     if res is None:
         exit(99)
