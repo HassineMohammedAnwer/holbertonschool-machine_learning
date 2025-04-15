@@ -54,5 +54,5 @@ class BayesianOptimization:
         self.gp.X = self.gp.X[:-1, :]
         X_opt = self.gp.X[idx]
         Y_opt = self.gp.Y[idx]
-    
+
         return X_opt, Y_opt
