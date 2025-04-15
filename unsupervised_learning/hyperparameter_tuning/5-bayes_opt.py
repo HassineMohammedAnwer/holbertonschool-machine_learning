@@ -51,6 +51,7 @@ class BayesianOptimization:
             idx = np.argmin(self.gp.Y)
         else:
             idx = np.argmax(self.gp.Y)
+        self.gp.X = self.gp.X[:-1, :]
         X_opt = self.gp.X[idx]
         Y_opt = self.gp.Y[idx]
     
