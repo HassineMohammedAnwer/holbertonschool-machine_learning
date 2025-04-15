@@ -48,11 +48,7 @@ def main():
 
     # Format the output string
     formatted_output = f"{first_launch['name']} ({first_launch['date_local']}) {rocket_name} - {launchpad_name} ({launchpad_locality})"
-    return formatted_output
+    print(formatted_output)
 
 if __name__ == '__main__':
-    launch_info = get_first_launch_info()
-    if launch_info:
-        print(launch_info)
-    else:
-        print("No upcoming launches found.")
+    main()
