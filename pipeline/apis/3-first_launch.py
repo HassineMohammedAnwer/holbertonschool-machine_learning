@@ -30,9 +30,7 @@ def main():
     launchpad_name = launchpad_data['name']
     launchpad_locality = launchpad_data['locality']
     # Format the output string
-    formatted_output = f"{first_launch['name']} ({
-        first_launch['date_local']}) {
-            rocket_name} - {launchpad_name} ({launchpad_locality})"
+    formatted_output = f"{first_launch['name']} ({first_launch['date_local']}) {rocket_name} - {launchpad_name} ({launchpad_locality})"
     print(formatted_output)
 
 if __name__ == '__main__':
