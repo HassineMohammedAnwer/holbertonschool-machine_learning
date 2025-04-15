@@ -122,7 +122,7 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     T = Observations.shape[0]
     for _ in range(iterations):
         P_f, F = forward(Observations, Emission, Transition, Initial)
-        p_b, B = backward(Observations, Emission, Transition, scaling)
+        p_b, B = backward(Observations, Emission, Transition, Initial)
         gamma = np.zeros((N, T))
         xi = np.zeros((N, N, T-1))
         for t in range(T-1):
