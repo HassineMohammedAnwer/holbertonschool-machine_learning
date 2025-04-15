@@ -126,7 +126,7 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         scaling[0] = 1.0 / (F[:, 0].sum() + 1e-10)
         for t in range(1, T):
             scaling[t] = 1.0 / (F[:, t].sum() + 1e-10)
-        B = backward(Observations, Emission, Transition, scaling)
+        p_b, B = backward(Observations, Emission, Transition, scaling)
         if P_f <= 0:
             return None, None
         xi = F[:, None, :-1] * Transition[:, :, None] * Emission[:, Observations[1:]][None, :, :] * B[None, :, 1:]
