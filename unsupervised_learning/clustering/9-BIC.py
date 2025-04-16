@@ -45,12 +45,13 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if type(kmin) is not int or kmin != int(kmin) or kmin < 1:
         return None, None, None, None
     if kmax is None:
-        kmax = n 
+        kmax = n
     if type(kmax) is not int or kmax != int(kmax) or kmax < 1:
         return None, None, None, None
     if kmax <= kmin:
         return None, None, None, None
-    if type(iterations) is not int or iterations != int(iterations) or iterations < 1:
+    if type(iterations) is not int or(
+        iterations != int(iterations) or iterations < 1):
         return None, None, None, None
     if type(tol) is not float or tol < 0:
         return None, None, None, None
