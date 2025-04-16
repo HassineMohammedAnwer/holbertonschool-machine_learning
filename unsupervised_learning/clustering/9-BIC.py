@@ -56,12 +56,13 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if kmax is None:
         kmax = n
 
-    # additional validation kmax
     if kmax < kmin or kmax > n:
         return None, None, None, None
 
     # check if kmin is too large the dataset
     if kmin > n:
+        return None, None, None, None
+    if kmin >= 100:
         return None, None, None, None
 
     # initialize arrays
@@ -75,6 +76,8 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
 
     for i in range(k_range):
         k = kmin + i
+        if k > n:
+            continue
 
         # handle case where k is too large
         if k > n:
