@@ -2,7 +2,7 @@
 -- Requirements:
 -- Procedure ComputeAverageScoreForUser is taking 1 input:
 -- user_id, a users.id value (you can assume user_id is linked to an existing users)
-DELIMITER //
+DELIMITER $$
 
 DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 CREATE PROCEDURE ComputeAverageScoreForUser (
