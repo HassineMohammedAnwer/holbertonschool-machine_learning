@@ -21,7 +21,6 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     __for the EM algorithm
     verbose is a boolean that determines if the EM algorithm
     __should print information to the standard output
-    You should use expectation_maximization = __import__('8-EM').expectation_maximization
     You may use at most 1 loop
     Returns: best_k, best_result, l, b, or
     __None, None, None, None on failure
