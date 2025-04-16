@@ -39,16 +39,23 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     p is the number of parameters required  the model
     n is the number of data points used to create the model
     l is the log likelihood of the model"""
-    if (
-        not isinstance(X, np.ndarray) or X.ndim != 2
-        or not isinstance(kmin, int) or kmin <= 0
-        or kmax is not None and (not isinstance(kmax, int) or kmax <= 0)
-        or not isinstance(iterations, int) or iterations <= 0
-        or not isinstance(tol, float) or tol < 0
-        or not isinstance(verbose, bool)
-    ):
+    if type(X) is not np.ndarray or X.ndim != 2:
         return None, None, None, None
     n, d = X.shape
+    if type(kmin) is not int or kmin != int(kmin) or kmin < 1:
+        return None, None, None, None
+    if kmax is None:
+        kmax = n 
+    if type(kmax) is not int or kmax != int(kmax) or kmax < 1:
+        return None, None, None, None
+    if kmax <= kmin:
+        return None, None, None, None
+    if type(iterations) is not int or iterations != int(iterations) or iterations < 1:
+        return None, None, None, None
+    if type(tol) is not float or tol < 0:
+        return None, None, None, None
+    if type(verbose) is not bool:
+        return None, None, None, None
     if kmax is None:
         kmax = n
     if kmax < kmin or kmin > n:
