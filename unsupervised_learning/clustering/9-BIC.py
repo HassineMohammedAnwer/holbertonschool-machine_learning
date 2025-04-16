@@ -79,9 +79,6 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         if k > n:
             continue
 
-        # handle case where k is too large
-        if k > n:
-            return None, None, None, None
         # call expectation_maximization with error handling
         result = expectation_maximization(X, k, iterations, tol, verbose)
 
