@@ -39,7 +39,6 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     p is the number of parameters required  the model
     n is the number of data points used to create the model
     l is the log likelihood of the model"""
-    # Input validation
     if (
         not isinstance(X, np.ndarray) or X.ndim != 2
         or not isinstance(kmin, int) or kmin <= 0
@@ -49,68 +48,39 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         or not isinstance(verbose, bool)
     ):
         return None, None, None, None
-
     n, d = X.shape
-
-    # handle kmax
     if kmax is None:
         kmax = n
-
-    if kmax < kmin or kmax > n:
-        return None, None, None, None
-
-    # check if kmin is too large the dataset
-    if kmin > n:
+    if kmax < kmin or kmin > n:
         return None, None, None, None
     if kmin >= 100:
         return None, None, None, None
-
-    # initialize arrays
     k_range = kmax - kmin + 1
     log_likelihoods = np.zeros(k_range)
     bic_values = np.zeros(k_range)
-
-    best_k = None
     best_bic = np.inf
     best_result = None
-
     for i in range(k_range):
         k = kmin + i
         if k > n:
             continue
-
-        # call expectation_maximization with error handling
-        result = expectation_maximization(X, k, iterations, tol, verbose)
-
-        # check if result is valid
-        if result is None or len(result) != 5:
-            return None, None, None, None
-
-        pi, m, S, _, log_likelihood = result
-        # check if any of the returned values are None
-        if pi is None or m is None or S is None or log_likelihood is None:
-            return None, None, None, None
-
-        # calculate number of parameters
-        # k-1 pi (priors sum to 1)
-        # k*d means
-        # k*d*(d+1)/2 covariance matrices (symmetric)
-        p = k - 1 + k * d + k * d * (d + 1) / 2
-
-        # calculate BIC
-        bic = p * np.log(n) - 2 * log_likelihood
-
-        # store values
-        log_likelihoods[i] = log_likelihood
-        bic_values[i] = bic
-
-        # update best model if this one has lower BIC
-        if bic < best_bic:
-            best_k = k
-            best_bic = bic
-            best_result = (pi, m, S)
-
-    # if we didn't find a valid model
+        try:
+            result = expectation_maximization(X, k, iterations, tol, verbose)
+            if result is None or len(result) != 5:
+                continue
+            pi, m, S, _, log_likelihood = result
+            if pi is None or m is None or S is None or log_likelihood is None:
+                continue
+            p = k - 1 + k * d + k * d * (d + 1) / 2
+            bic = p * np.log(n) - 2 * log_likelihood
+            log_likelihoods[i] = log_likelihood
+            bic_values[i] = bic
+            if bic < best_bic:
+                best_k = k
+                best_bic = bic
+                best_result = (pi, m, S)
+        except Exception:
+            continue
     if best_k is None:
         return None, None, None, None
 
