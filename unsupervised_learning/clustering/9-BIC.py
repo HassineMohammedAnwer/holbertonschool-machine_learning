@@ -21,7 +21,6 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     __for the EM algorithm
     verbose is a boolean that determines if the EM algorithm
     __should print information to the standard output
-    You may use at most 1 loop
     Returns: best_k, best_result, l, b, or
     __None, None, None, None on failure
     best_k is the best value for k based on its BIC
@@ -74,50 +73,42 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     best_bic = np.inf
     best_result = None
 
-    # loop through each k value
     for i in range(k_range):
         k = kmin + i
 
         # handle case where k is too large
         if k > n:
             return None, None, None, None
+        # call expectation_maximization with error handling
+        result = expectation_maximization(X, k, iterations, tol, verbose)
 
-        try:
-            # call expectation_maximization with error handling
-            result = expectation_maximization(X, k, iterations, tol, verbose)
-
-            # check if result is valid
-            if result is None or len(result) != 5:
-                return None, None, None, None
-
-            pi, m, S, _, log_likelihood = result
-
-            # check if any of the returned values are None
-            if pi is None or m is None or S is None or log_likelihood is None:
-                return None, None, None, None
-
-            # calculate number of parameters
-            # k-1 for pi (priors sum to 1)
-            # k*d for means
-            # k*d*(d+1)/2 for covariance matrices (symmetric)
-            p = k - 1 + k * d + k * d * (d + 1) / 2
-
-            # calculate BIC
-            bic = p * np.log(n) - 2 * log_likelihood
-
-            # store values
-            log_likelihoods[i] = log_likelihood
-            bic_values[i] = bic
-
-            # update best model if this one has lower BIC
-            if bic < best_bic:
-                best_k = k
-                best_bic = bic
-                best_result = (pi, m, S)
-
-        except Exception:
-            # if any exception occurs during EM, return None values
+        # check if result is valid
+        if result is None or len(result) != 5:
             return None, None, None, None
+
+        pi, m, S, _, log_likelihood = result
+        # check if any of the returned values are None
+        if pi is None or m is None or S is None or log_likelihood is None:
+            return None, None, None, None
+
+        # calculate number of parameters
+        # k-1 for pi (priors sum to 1)
+        # k*d for means
+        # k*d*(d+1)/2 for covariance matrices (symmetric)
+        p = k - 1 + k * d + k * d * (d + 1) / 2
+
+        # calculate BIC
+        bic = p * np.log(n) - 2 * log_likelihood
+
+        # store values
+        log_likelihoods[i] = log_likelihood
+        bic_values[i] = bic
+
+        # update best model if this one has lower BIC
+        if bic < best_bic:
+            best_k = k
+            best_bic = bic
+            best_result = (pi, m, S)
 
     # if we didn't find a valid model
     if best_k is None:
