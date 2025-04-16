@@ -43,7 +43,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if (
         not isinstance(X, np.ndarray) or X.ndim != 2
         or not isinstance(kmin, int) or kmin <= 0
-        or kmax is not None or kmax <= kmin
+        or kmax is not None and (not isinstance(kmax, int) or kmax < kmin)
         or not isinstance(iterations, int) or iterations <= 0
         or isinstance(kmax, int) and kmax <= kmin
         or not isinstance(iterations, int) or iterations <= 0
@@ -54,6 +54,8 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     n, d = X.shape
     if kmax is None:
         kmax = n
+    if not isinstance(kmax, int) or kmax < 1 or kmax < kmin or kmax > n:
+        return None, None, None, None
     k_range = kmax - kmin + 1
     log_likelihoods = np.zeros(k_range)
     bic_values = np.zeros(k_range)
