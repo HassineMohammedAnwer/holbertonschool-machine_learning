@@ -27,12 +27,12 @@ def deep_rnn(rnn_cells, X, h_0):
     Y = np.zeros((t, m, rnn_cells[-1].by.shape[1]))
     for i in range(t):
         layer_input = X[i]
-        for layer in range(l):
-            cell = rnn_cells[layer]
-            h_prev = H[i, layer]
-            h_next, y = cell.forward(layer_input, h_prev)
+        for layer, cell in enumerate(rnn_cells):
+            if layer == 0:
+                h_next, y = cell.forward(H[i, layer], X[i])
+            else:
+                h_next, y = cell.forward(H[i, layer], h_next)
             H[i + 1, layer] = h_next
-            layer_input = h_next
         Y[i] = y
 
     return H, Y
