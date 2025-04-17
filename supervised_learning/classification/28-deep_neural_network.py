@@ -119,27 +119,24 @@ class DeepNeuralNetwork:
         __backpropagation to update the weights correctly."""
         m = Y.shape[1]
         L = self.L
+        A = cache[f"A{L}"]
+        dZ = A - Y
 
-        # Initialize gradient of the last layer (output layer)
-        A_L = cache['A' + str(L)]
-        dZ_L = A_L - Y
-        # Backpropagation through the layers, Loop backwards through layers
-        for lay in reversed(range(1, L + 1)):
-            A_prev = cache['A' + str(lay - 1)]
-            W = self.weights[f"W{lay}"]
-            # Compute gradients of weights, biases, and previous activation
-            dW = (1 / m) * np.matmul(dZ_L, A_prev.T)
-            db = (1 / m) * np.sum(dZ_L, axis=1, keepdims=True)
+        for layer in reversed(range(1, L + 1)):
+            A_prev = cache[f"A{layer - 1}"]
+            W = self.weights[f"W{layer}"]
+            dW = (1 / m) * np.dot(dZ, A_prev.T)
+            db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
 
-            if lay > 1:
+            if layer > 1:
                 if self.__activation == 'sig':
                     deriv = A_prev * (1 - A_prev)
                 else:
                     deriv = 1 - (A_prev ** 2)
-            dZ_L = np.dot(W.T, dZ) * deriv
+                dZ = np.dot(W.T, dZ) * deriv
 
-            self.weights['W' + str(lay)] -= alpha * dW
-            self.weights['b' + str(lay)] -= alpha * db
+            self.weights[f"W{layer}"] -= alpha * dW
+            self.weights[f"b{layer}"] -= alpha * db
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
