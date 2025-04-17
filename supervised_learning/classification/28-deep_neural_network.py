@@ -53,7 +53,7 @@ class DeepNeuralNetwork:
         """A dictionary to hold all weights and biased of the network """
         return self.__cache
 
-   @property
+    @property
     def activation(self):
         """Activation function getter"""
         return self.__activation
