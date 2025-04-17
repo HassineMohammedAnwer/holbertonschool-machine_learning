@@ -109,7 +109,7 @@ class DeepNeuralNetwork:
             self.weights['W' + str(lay)] -= alpha * dW
             self.weights['b' + str(lay)] -= alpha * db
 
-    def train(self, X, Y,iterations=5000, alpha=0.05,
+    def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
         """for i in range(iterations):
             A1, A2 = self.forward_prop(X)
@@ -159,7 +159,8 @@ class DeepNeuralNetwork:
                     cost = self.cost(Y, A_new)
                     costs.append(cost)
                     if verbose:
-                        print(f"Cost after {current_iteration} iterations: {cost}")
+                        print(f"Cost after {
+                                current_iteration} iterations: {cost}")
             i += 1
 
         if graph and (verbose or graph):
