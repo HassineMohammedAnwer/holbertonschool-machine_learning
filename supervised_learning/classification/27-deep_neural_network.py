@@ -67,9 +67,10 @@ class DeepNeuralNetwork:
         return A, self.cache
 
     def cost(self, Y, A):
-        """cost using logistic regression"""
-        return (-1 / Y.shape[1]) *\
-            np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
+        """cost using Cross-entropy"""
+        m = Y.shape[1]
+        A_clipped = np.clip(A, 1e-8, 1 - 1e-8)
+        return (-1 / m) * np.sum(Y * np.log(A_clipped))
 
     def evaluate(self, X, Y):
         """Return: Returns the neuron’s prediction and the cost
