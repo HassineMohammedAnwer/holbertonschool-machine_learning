@@ -56,7 +56,7 @@ class DeepNeuralNetwork:
         self.__cache["A0"] = X
         A_prev = X
         for i in range(1, self.L + 1):
-            Z = np.dot(self.weights[f"W{i}"], A) + self.weights[f"b{i}"]
+            Z = np.dot(self.weights[f"W{i}"], A_prev) + self.weights[f"b{i}"]
             if i == self.L:
                 exp_Z = np.exp(Z - np.max(Z, axis=0, keepdims=True))
                 A = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
