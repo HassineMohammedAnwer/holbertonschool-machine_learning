@@ -159,8 +159,7 @@ class DeepNeuralNetwork:
                     cost = self.cost(Y, A_new)
                     costs.append(cost)
                     if verbose:
-                        print(f"Cost after {
-                                current_iteration} iterations: {cost}")
+                        print(f"Cost after {current_iteration} iterations: {cost}")
             i += 1
 
         if graph and (verbose or graph):
