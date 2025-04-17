@@ -131,7 +131,7 @@ class DeepNeuralNetwork:
             dW = (1 / m) * np.matmul(dZ_L, A_prev.T)
             db = (1 / m) * np.sum(dZ_L, axis=1, keepdims=True)
 
-            if layer > 1:
+            if lay > 1:
                 if self.__activation == 'sig':
                     deriv = A_prev * (1 - A_prev)
                 else:
