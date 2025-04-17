@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-""" 23. Upgrade Train DeepNeuralNetwork """
+""" 26. Persistence is Key """
 import numpy as np
+import pickle
+import os
 
 
 class DeepNeuralNetwork:
