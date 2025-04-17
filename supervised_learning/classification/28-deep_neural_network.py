@@ -98,11 +98,11 @@ class DeepNeuralNetwork:
          __argmax of the output probabilities for each example, ensuring the
          __predictions match the format of the input labels."""
         A, _ = self.forward_prop(X)
-        predictions = np.where(A >= 0.5, 1, 0)
+        predictions_indices = np.argmax(A, axis=0)
         classes = A.shape[0]
-        one_hot_predictions = np.eye(classes)[predictions].T
+        one_hot_predictions = np.eye(classes)[predictions_indices].T
         cost = self.cost(Y, A)
-        return predictions, cost
+        return one_hot_predictions, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """method calculates one pass of gradient descent on the neuron
