@@ -126,7 +126,7 @@ class DeepNeuralNetwork:
         # Backpropagation through the layers, Loop backwards through layers
         for lay in reversed(range(1, L + 1)):
             A_prev = cache['A' + str(lay - 1)]
-            W = self.weights[f"W{layer}"]
+            W = self.weights[f"W{lay}"]
             # Compute gradients of weights, biases, and previous activation
             dW = (1 / m) * np.matmul(dZ_L, A_prev.T)
             db = (1 / m) * np.sum(dZ_L, axis=1, keepdims=True)
