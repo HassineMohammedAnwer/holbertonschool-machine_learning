@@ -54,10 +54,9 @@ class DeepNeuralNetwork:
         change:  use softmax activation in the output layer for multiclass classification,
         __while retaining sigmoid activation for hidden layers."""
         self.__cache["A0"] = X
-
+        A_prev = X
         for i in range(1, self.L + 1):
-            A_prev = self.__cache[f"A{i - 1}"]
-            Z = np.matmul(self.weights[f"W{i}"], A_prev) + self.weights[f"b{i}"]
+            Z = np.dot(self.weights[f"W{i}"], A_prev) + self.weights[f"b{i}"]
             if i == self.L:
                 exp_Z = np.exp(Z - np.max(Z, axis=0, keepdims=True))
                 A = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
