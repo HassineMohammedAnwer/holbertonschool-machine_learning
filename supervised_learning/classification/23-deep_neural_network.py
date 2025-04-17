@@ -107,7 +107,8 @@ class DeepNeuralNetwork:
             self.weights['W' + str(lay)] -= alpha * dW
             self.weights['b' + str(lay)] -= alpha * db
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
         """for i in range(iterations):
             A1, A2 = self.forward_prop(X)
             self.gradient_descent(X, Y, A1, A2, alpha)
@@ -148,15 +149,15 @@ class DeepNeuralNetwork:
             self.forward_prop(X)
             # run gradient descent
             self.gradient_descent(Y, self.cache, alpha)
-            current_iteration = i + 1
+            current_i = i + 1
 
             if verbose or graph:
-                if current_iteration in steps_to_log:
+                if current_i in steps_to_log:
                     A_new, _ = self.forward_prop(X)
                     cost = self.cost(Y, A_new)
                     costs.append(cost)
                     if verbose:
-                        print(f"Cost after {current_iteration} iterations: {cost}")
+                        print(f"Cost after {current_i} iterations: {cost}")
             i += 1
 
         if graph and (verbose or graph):
