@@ -151,15 +151,15 @@ class DeepNeuralNetwork:
             self.forward_prop(X)
             # run gradient descent
             self.gradient_descent(Y, self.cache, alpha)
-            current_iteration = i + 1
+            current_i = i + 1
 
             if verbose or graph:
-                if current_iteration in steps_to_log:
+                if current_i in steps_to_log:
                     A_new, _ = self.forward_prop(X)
                     cost = self.cost(Y, A_new)
                     costs.append(cost)
                     if verbose:
-                        print(f"Cost after {current_iteration} iterations: {cost}")
+                        print(f"Cost after {current_i} iterations: {cost}")
             i += 1
 
         if graph and (verbose or graph):
