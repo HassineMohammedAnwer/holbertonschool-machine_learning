@@ -118,25 +118,19 @@ class DeepNeuralNetwork:
         Compute the derivatives of the activation function during
         __backpropagation to update the weights correctly."""
         m = Y.shape[1]
-        L = self.L
-        A = cache[f"A{L}"]
-        dZ = A - Y
-
-        for layer in reversed(range(1, L + 1)):
-            A_prev = cache[f"A{layer - 1}"]
-            W = self.weights[f"W{layer}"]
-            dW = (1 / m) * np.dot(dZ, A_prev.T)
+        dZ = cache[f"A{self.__L}"] - Y
+        for i in range(self.__L, 0, -1):
+            prev_A = cache[f"A{i - 1}"]
+            dW = (1 / m) * np.matmul(dZ, prev_A.T)
             db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
-
-            if layer > 1:
-                if self.__activation == 'sig':
-                    deriv = A_prev * (1 - A_prev)
-                else:
-                    deriv = 1 - (A_prev ** 2)
-                dZ = np.dot(W.T, dZ) * deriv
-
-            self.weights[f"W{layer}"] -= alpha * dW
-            self.weights[f"b{layer}"] -= alpha * db
+            if self.__activation == 'sig':
+                dZ = np.matmul(
+                    self.__weights[f"W{i}"].T, dZ) * prev_A * (1 - prev_A)
+            else:
+                dZ = np.matmul(
+                    self.__weights[f"W{i}"].T, dZ) * (1 - (prev_A ** 2))
+            self.__weights[f"W{i}"] -= alpha * dW
+            self.__weights[f"b{i}"] -= alpha * db
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
