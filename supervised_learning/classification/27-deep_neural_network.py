@@ -51,7 +51,8 @@ class DeepNeuralNetwork:
 
     def forward_prop(self, X):
         """forward propagation of the neural network
-        change:  use softmax activation in the output layer for multiclass classification,
+        change:  use softmax activation in the output layer
+        __for multiclass classification,
         __while retaining sigmoid activation for hidden layers."""
         self.__cache["A0"] = X
         A_prev = X
@@ -79,7 +80,7 @@ class DeepNeuralNetwork:
            values should be 1
            The label values should be 1 if the output of the network is >= 0.5
            and 0 otherwise
-         converts the softmax output to one-hot encoded predictions by taking the
+         converts the softmax output to one-hot encoded predictions by taking
          __argmax of the output probabilities for each example, ensuring the
          __predictions match the format of the input labels."""
         A, _ = self.forward_prop(X)
